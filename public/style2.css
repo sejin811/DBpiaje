@@ -140,3 +140,30 @@
       font-size: 0.9rem;
     }
   }
+
+  .comment-card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 0.95rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  position: relative;
+}
+
+.comment-card button.delete-button {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  font-size: 0.8rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.comment-card button.delete-button:hover {
+  background-color: #b02a37;
+}

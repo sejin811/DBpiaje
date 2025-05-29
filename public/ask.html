@@ -102,7 +102,23 @@
     list.innerHTML = "";
     data.forEach(c => {
       const div = document.createElement("div");
-      div.innerText = `${c.name}: ${c.comment}`;
+      div.className = "comment-card";
+
+      const content = document.createElement("div");
+      content.innerHTML = `<strong>${c.name}</strong> (${new Date(c.created_at).toLocaleString()}):<br>${c.comment}`;
+      
+      const delBtn = document.createElement("button");
+      delBtn.textContent = "삭제";
+      delBtn.className = "delete-button";
+      delBtn.onclick = async () => {
+        await fetch(`http://localhost:3000/comments/${c.id}`, {
+          method: "DELETE"
+        });
+        loadComments();
+      };
+
+      div.appendChild(content);
+      div.appendChild(delBtn);
       list.appendChild(div);
     });
   }

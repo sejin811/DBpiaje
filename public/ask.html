@@ -79,6 +79,14 @@
 <div id="commentList"></div>
 
 <script>
+  await fetch("http://localhost:3000/comments", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name, comment }),
+  });
+</script>
+
+<script>
   document.getElementById("commentForm").addEventListener("submit", async function (e) {
     e.preventDefault();
 

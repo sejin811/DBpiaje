@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DBpiaje | ask</title>
+     <link rel="icon" href="pepe2.jpeg" type="image/png">
+    <!-- CSS파일 연결 --> 
+   <link rel="stylesheet" href="style2.css">
+   <style>
+    .banner {
+      background-image: url('https://img.freepik.com/fotos-kostenlos/welliger-schwarz-weisser-hintergrund_23-2150530917.jpg?semt=ais_hybrid&w=740');
+      background-size: cover;
+      background-position: center;
+      color: rgb(255, 0, 0);
+      text-align: center;
+      font-family: Arial, sans-serif;
+
+      /* 가로로 길고 얇은 배너 */
+      height: 120px; /* 원하는 높이로 조절 */
+      width: 100%;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      padding: 0;
+      margin: 0;
+    }
+
+    .banner h1 {
+      font-size: 4rem;
+      margin: 0;
+    }
+
+    .banner p {
+      font-size: 1rem;
+      margin: 5px 0 0 0;
+    }
+
+    /* 모바일 대응 */
+    @media (max-width: 600px) {
+      .banner {
+        height: 100px;
+      }
+
+      .banner h1 {
+        font-size: 7vw;
+      }
+
+      .banner p {
+        font-size: 0.9rem;
+      }
+    }
+   </style>
+</head>
+<body>
+
+     <!--배너-->
+  <div class="banner">
+    <h1>DBpiaje🕓-문의 페이지</h1>
+  </div>
+
+  <!--메뉴-->
+  <aside class="sidebar">
+  <h3>메뉴</h3>
+  <a class="menu-button" href="../index.html">홈</a>
+  <a class="menu-button" href="../paper.html">논문</a>
+  <a class="menu-button" href="ask.html">문의</a>
+  </aside>
+
+<form id="commentForm">
+  <input type="text" name="name" placeholder="이름" required>
+  <textarea name="comment" placeholder="댓글을 입력하세요" required></textarea>
+  <button type="submit">댓글 작성</button>
+</form>
+
+<div id="commentList"></div>
+
+<script>
+  document.getElementById("commentForm").addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const name = e.target.name.value;
+    const comment = e.target.comment.value;
+
+    await fetch("http://localhost:3000/comments", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({ name, comment })
+    });
+
+    e.target.reset();
+    loadComments();
+  });
+
+  async function loadComments() {
+    const res = await fetch("http://localhost:3000/comments");
+    const data = await res.json();
+    const list = document.getElementById("commentList");
+    list.innerHTML = "";
+    data.forEach(c => {
+      const div = document.createElement("div");
+      div.innerText = `${c.name}: ${c.comment}`;
+      list.appendChild(div);
+    });
+  }
+
+  loadComments(); // 페이지 로드 시 댓글 불러오기
+</script>
+
+</body>
+</html>

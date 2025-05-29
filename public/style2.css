@@ -1,0 +1,142 @@
+.layout {
+  display: flex;
+  min-height: 100vh; /* 화면 전체 높이 */
+}
+
+/* 왼쪽 메뉴 영역 */
+.sidebar {
+  width: 220px;
+  background-color: #f0f0f0;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+}
+
+.sidebar h3 {
+  margin-top: 0;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  margin: 10px 0;
+}
+
+.sidebar a {
+  text-decoration: none;
+  color: #333;
+}
+
+/* 오른쪽 본문 영역 */
+.main-content {
+  flex: 1;
+  padding: 40px;
+  background-color: #fff;
+}
+
+
+
+/* 사이드바 버튼 */
+.menu-button {
+  display: block;
+  background-color: #ffffff;
+  color: #333;
+  text-decoration: none;
+  padding: 12px 20px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  transition: background-color 0.3s;
+  text-align: center;
+  font-weight: bold;
+}
+
+.menu-button:hover {
+  background-color: #e0e0e0;
+}
+
+/* 본문 내용 */
+.main-content {
+  flex: 1;
+  padding: 40px;
+  background-color: #d9d8d8;
+}
+
+#commentList div {
+  margin: 10px 0;
+  padding: 10px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+}
+
+/*댓글 작성란 구미기*/
+
+  /* 댓글 폼 스타일 */
+  #commentForm {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  #commentForm input[type="text"],
+  #commentForm textarea {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    resize: vertical;
+  }
+
+  #commentForm button {
+    background-color: #007bff;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  #commentForm button:hover {
+    background-color: #0056b3;
+  }
+
+  /* 댓글 목록 스타일 */
+  #commentList {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  #commentList div {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 0.95rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  }
+
+  /* 모바일 대응 */
+  @media (max-width: 600px) {
+    #commentForm, #commentList {
+      margin: 20px 10px;
+      padding: 15px;
+    }
+
+    #commentForm button {
+      font-size: 0.9rem;
+    }
+  }

@@ -1,0 +1,65 @@
+.layout {
+  display: flex;
+  min-height: 100vh; /* 화면 전체 높이 */
+}
+
+/* 왼쪽 메뉴 영역 */
+.sidebar {
+  width: 220px;
+  background-color: #f0f0f0;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+}
+
+.sidebar h3 {
+  margin-top: 0;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  margin: 10px 0;
+}
+
+.sidebar a {
+  text-decoration: none;
+  color: #333;
+}
+
+/* 오른쪽 본문 영역 */
+.main-content {
+  flex: 1;
+  padding: 40px;
+  background-color: #fff;
+}
+
+
+
+/* 사이드바 버튼 */
+.menu-button {
+  display: block;
+  background-color: #ffffff;
+  color: #333;
+  text-decoration: none;
+  padding: 12px 20px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  transition: background-color 0.3s;
+  text-align: center;
+  font-weight: bold;
+}
+
+.menu-button:hover {
+  background-color: #e0e0e0;
+}
+
+/* 본문 내용 */
+.main-content {
+  flex: 1;
+  padding: 40px;
+  background-color: #d9d8d8;
+}

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DBpiaje | Paper Page</title>
+    <link rel="icon" href="img/pepe.jpeg" type="image/png">
+    <!-- CSS파일 연결 --> 
+   <link rel="stylesheet" href="style1.css">
+   <style>
+    .banner {
+      background-image: url('https://img.freepik.com/fotos-kostenlos/welliger-schwarz-weisser-hintergrund_23-2150530917.jpg?semt=ais_hybrid&w=740');
+      background-size: cover;
+      background-position: center;
+      color: rgb(255, 0, 0);
+      text-align: center;
+      font-family: Arial, sans-serif;
+
+      /* 가로로 길고 얇은 배너 */
+      height: 120px; /* 원하는 높이로 조절 */
+      width: 100%;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      padding: 0;
+      margin: 0;
+    }
+
+    .banner h1 {
+      font-size: 4rem;
+      margin: 0;
+    }
+
+    .banner p {
+      font-size: 1rem;
+      margin: 5px 0 0 0;
+    }
+
+    /* 모바일 대응 */
+    @media (max-width: 600px) {
+      .banner {
+        height: 100px;
+      }
+
+      .banner h1 {
+        font-size: 7vw;
+      }
+
+      .banner p {
+        font-size: 0.9rem;
+      }
+    }
+   </style>
+
+   <!--논문 선택 버튼 CSS-->
+   <style>
+  .paper-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 40px;
+  }
+
+  .paper-card {
+    width: 220px;
+    height: 150px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+    font-weight: bold;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .paper-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    background-color: #f8f8f8;
+  }
+
+  /* ✅ 스마트폰에서 2개씩 정렬 */
+  @media (max-width: 600px) {
+    .paper-container {
+      gap: 10px;
+      padding: 10px;
+    }
+
+    .paper-card {
+      width: calc(50% - 10px); /* 전체의 50% - 여백 */
+      height: 120px;
+      font-size: 14px;
+      padding: 10px;
+    }
+  }
+   </style>
+</head>
+<body>
+
+    <!--배너-->
+  <div class="banner">
+    <h1>DBpiaje🕓-논문페이지</h1>
+  </div>
+
+  <!--메뉴-->
+  <aside class="sidebar">
+  <h3>메뉴</h3>
+  <a class="menu-button" href="index.html">홈</a>
+  <a class="menu-button" href="paper.html">논문</a>
+  <a class="menu-button" href="ask.html">문의</a>
+</aside>
+
+<!--논문 선택-->
+<main class="main-content">
+      <h2 style="text-align: center;" >[논문을 선택하세요]</h2>
+
+      <div class="paper-container">
+        <a class="paper-card" href="paper1.html">논문 1<br>어쩌구</a>
+        <a class="paper-card" href="paper2.html">논문 2<br>저쩌구</a>
+        <a class="paper-card" href="paper3.html">논문 3<br>지선 밥머거</a>
+        <!--<a class="paper-card" href="https://example.com" target="_blank">외부 논문<br>ChatGPT 연구</a> -->
+      </div>
+    </main>
+  </div>
+
+    
+</body>
+</html>

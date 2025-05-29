@@ -1,10 +1,7 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
-mongoose.connect("mongodb+srv://yangsejin811:23243298y@cluster0.s1abc.mongodb.net/commentsDB?retryWrites=true&w=majority", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-}).then(() => {
-  console.log("MongoDB Atlas 연결 완료");
-}).catch(err => {
-  console.error("MongoDB 연결 오류:", err);
-});
+const uri = "mongodb+srv://yangsejin811:23243298y@cluster0.s1abc.mongodb.net/commentsDB?retryWrites=true&w=majority";
+
+mongoose.connect(uri)
+  .then(() => console.log('MongoDB 연결 성공'))
+  .catch(err => console.error('MongoDB 연결 오류:', err));

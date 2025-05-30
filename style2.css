@@ -188,3 +188,18 @@
   margin: 8px 0 0;
   font-size: 0.95rem;
 }
+
+/*하단 푸터(페이지 맨 밑에 있는거)*/
+.footer {
+  background-color: #f2f2f2;
+  text-align: center;
+  padding: 20px 10px;
+  font-size: 0.9rem;
+  color: #555;
+  margin-top: 50px;
+  border-top: 1px solid #ddd;
+}
+
+.footer p {
+  margin: 5px 0;
+}

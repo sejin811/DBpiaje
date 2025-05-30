@@ -167,3 +167,24 @@
 .comment-card button.delete-button:hover {
   background-color: #b02a37;
 }
+
+/*공지사항*/
+.notice-box {
+  background-color: #fff8dc;
+  border: 1px solid #f0c36d;
+  padding: 15px;
+  margin: 20px;
+  border-radius: 8px;
+  font-family: 'Arial', sans-serif;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.notice-box h2 {
+  margin-top: 0;
+  color: #d2691e;
+}
+
+.notice-box p {
+  margin: 8px 0 0;
+  font-size: 0.95rem;
+}

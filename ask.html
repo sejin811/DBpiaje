@@ -1,163 +1,260 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DBpiaje | ask</title>
-     <link rel="icon" href="img/pepe.jpeg" type="image/png">
-    <!-- CSS파일 연결 --> 
-   <link rel="stylesheet" href="style2.css">
-   <style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DBpiaje | ask</title>
+  <link rel="icon" href="img/pepe.jpeg" type="image/png" />
+  <link rel="stylesheet" href="style2.css" />
+  <style>
     .banner {
       background-image: url('https://img.freepik.com/fotos-kostenlos/welliger-schwarz-weisser-hintergrund_23-2150530917.jpg?semt=ais_hybrid&w=740');
       background-size: cover;
       background-position: center;
-      color: rgb(255, 0, 0);
+      color: red;
       text-align: center;
       font-family: Arial, sans-serif;
-
-      /* 가로로 길고 얇은 배너 */
-      height: 120px; /* 원하는 높이로 조절 */
+      height: 120px;
       width: 100%;
-
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-
-      padding: 0;
       margin: 0;
     }
 
-    .banner h1 {
-      font-size: 4rem;
-      margin: 0;
-    }
+    .banner h1 { font-size: 4rem; margin: 0; }
+    .banner p { font-size: 1rem; margin: 5px 0 0 0; }
 
-    .banner p {
-      font-size: 1rem;
-      margin: 5px 0 0 0;
-    }
-
-    /* 모바일 대응 */
     @media (max-width: 600px) {
-      .banner {
-        height: 100px;
-      }
-
-      .banner h1 {
-        font-size: 7vw;
-      }
-
-      .banner p {
-        font-size: 0.9rem;
-      }
+      .banner { height: 100px; }
+      .banner h1 { font-size: 7vw; }
+      .banner p { font-size: 0.9rem; }
     }
-   </style>
+
+    .comment-card {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin: 10px;
+      border-radius: 8px;
+      background: #f9f9f9;
+    }
+
+    .delete-button {
+      background: red;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      margin-top: 5px;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-
-     <!--배너-->
   <div class="banner">
     <h1><i>DBpiaje</i>🕓-문의 페이지</h1>
   </div>
 
-  <!--메뉴-->
   <aside class="sidebar">
-  <h3>메뉴</h3>
-  <a class="menu-button" href="./index.html">홈</a>
-  <a class="menu-button" href="./paper.html">논문</a>
-  <a class="menu-button" href="./ask.html">문의</a>
+    <h3>메뉴</h3>
+    <a class="menu-button" href="./index.html">홈</a>
+    <a class="menu-button" href="./paper.html">논문</a>
+    <a class="menu-button" href="./ask.html">문의</a>
   </aside>
 
+  <!-- 공지사항 -->
+  <div class="notice-box">
+    <h2>📢 공지사항</h2>
+    <b>!현재 댓글 기능은 지원하고 있지 않습니다!<br>대신 이 이메일로 문의해주세요. <b style="color: blue;">yangsejin811@gmail.com</b></b>
+    <br><br>
+    <b style="color: rgb(245, 101, 30);">[자주 묻는 질문]</b><br>
+    <b>Q. 논문을 기재하고 싶은데 어떻게 해야 하나요?</b><br>
+    <b>A. 위의 이메일로 논문(png, pdf등)을 보내주시면 검토 후 기재해 드립니다.</b><br><br>
+    <b>Q. 논문 주제는 꼭 '양재선'이라는 생명체와 관련이 있어야 하나요?</b><br>
+    <b>A. 논문 주제는 자유입니다.</b><br><br>
+    <b>Q. 개발자에게 후원하고 싶은데 어떻게 해야하나요? (급함 ㅠㅠ)</b><br>
+    <b>A. <b style="color: rgb(0, 0, 0);">7777032890798 카카오뱅크🥴</b></b>
+  </div>
 
+  <form id="commentForm">
+    <input type="text" id="name" placeholder="이름" required />
+    <textarea id="comment" placeholder="댓글을 입력하세요" required></textarea>
+    <button type="submit">댓글 작성</button>
+  </form>
 
+  <div id="commentList"></div>
 
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
 
-<!-- 공지사항 -->
-<div class="notice-box">
-  <h2>📢 공지사항</h2>
-  <b>!현재 댓글 기능은 지원하고 있지 않습니다!<br>대신 이 이메일로 문의해주세요. <b style="color: blue;">yangsejin811@gmail.com</b></b>
-  <br>
-  <br>
-  <b style="color: rgb(245, 101, 30);">[자주 묻는 질문]</b>
-  <br>
-  <b>Q. 논문을 기재하고 싶은데 어떻게 해야 하나요?</b>
-  <br>
-  <b>A. 위의 이메일로 논문(png, pdf등)을 보내주시면 검토 후 기재해 드립니다.</b>
-  <br>
-  <br>
-  <b>Q. 논문 주제는 꼭 '양재선'이라는 생명체와 관련이 있어야 하나요?</b>
-  <br>
-  <b>A. 논문 주제는 자유입니다.</b>
-  <br>
-  <br>
-  <b>Q. 개발자에게 후원하고 싶은데 어떻게 해야하나요? (급함 ㅠㅠ)</b>
-  <br>
-  <b>A. <b style="color: rgb(0, 0, 0);">7777032890798 카카오뱅크🥴</b></b>
-</div>
+  <!--댓글 기능 구현을 위한 firebase 셋팅과 댓글 기능 script-->
+  <script>
+  
+  const firebaseConfig = {
+    apiKey: "AIzaSyCm6nslSJF8RQgjN3h4z-awLbObhM1FTVw",
+    authDomain: "dbpiaje.firebaseapp.com",
+    projectId: "dbpiaje",
+    storageBucket: "dbpiaje.firebasestorage.app",
+    messagingSenderId: "590808126930",
+    appId: "1:590808126930:web:4eb9e5e754674435df240b",
+    measurementId: "G-LGKY04RMLR"
+  };
 
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
 
-<form id="commentForm">
-  <input type="text" name="name" placeholder="이름" required>
-  <textarea name="comment" placeholder="댓글을 입력하세요" required></textarea>
-  <button type="submit">댓글 작성</button>
-</form>
+  let isAdmin = false;
+  let pendingDeleteId = null;
 
-<div id="commentList"></div>
-
-
-<script>
-  document.getElementById("commentForm").addEventListener("submit", async function (e) {
+  document.getElementById("commentForm").addEventListener("submit", function (e) {
     e.preventDefault();
+    const name = document.getElementById("name").value;
+    const comment = document.getElementById("comment").value;
 
-    const name = e.target.name.value;
-    const comment = e.target.comment.value;
-
-    await fetch("http://https://dbpiaje.onrender.com/", {
-      method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({ name, comment })
+    db.ref("comments").push({
+      name,
+      comment,
+      created_at: new Date().toISOString()
     });
 
-    e.target.reset();
-    loadComments();
+    document.getElementById("commentForm").reset();
   });
 
-  async function loadComments() {
-    const res = await fetch("http://localhost:3000/comments");
-    const data = await res.json();
-    const list = document.getElementById("commentList");
-    list.innerHTML = "";
-    data.forEach(c => {
-      const div = document.createElement("div");
-      div.className = "comment-card";
+  function loadComments() {
+    db.ref("comments").on("value", snapshot => {
+      const data = snapshot.val();
+      const list = document.getElementById("commentList");
+      list.innerHTML = "";
 
-      const content = document.createElement("div");
-      content.innerHTML = `<strong>${c.name}</strong> (${new Date(c.created_at).toLocaleString()}):<br>${c.comment}`;
-      
-      const delBtn = document.createElement("button");
-      delBtn.textContent = "삭제";
-      delBtn.className = "delete-button";
-      delBtn.onclick = async () => {
-        await fetch(`http://localhost:3000/comments/${c.id}`, {
-          method: "DELETE"
-        });
-        loadComments();
-      };
+      for (let id in data) {
+        const c = data[id];
+        const div = document.createElement("div");
+        div.className = "comment-card";
 
-      div.appendChild(content);
-      div.appendChild(delBtn);
-      list.appendChild(div);
+        const content = document.createElement("div");
+        content.innerHTML = `<strong>${c.name}</strong> (${new Date(c.created_at).toLocaleString()}):<br>${c.comment}`;
+
+        div.appendChild(content);
+
+        const delBtn = document.createElement("button");
+        delBtn.textContent = "삭제";
+        delBtn.className = "delete-button";
+        delBtn.onclick = () => requestDelete(id);
+        div.appendChild(delBtn);
+
+        list.appendChild(div);
+      }
     });
   }
 
-  loadComments(); // 페이지 로드 시 댓글 불러오기
+  // 삭제 요청 시 관리자 비밀번호 요구
+  function requestDelete(id) {
+    if (isAdmin) {
+      if (confirm("정말 삭제하시겠습니까?")) {
+        db.ref("comments/" + id).remove();
+      }
+    } else {
+      pendingDeleteId = id;
+      document.getElementById("adminModal").style.display = "flex";
+    }
+  }
+
+  // SHA-256 해시 함수
+  async function sha256(message) {
+    const msgBuffer = new TextEncoder().encode(message);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    return hashHex;
+  }
+
+  const adminPasswordHash = "1a36ea191cd5abd1c2ebd694de6dc5f1bb83661a77176d1b5524645b2ec00668"; 
+  // 비밀번호 해시값
+
+  async function verifyAdmin() {
+    const pw = document.getElementById("adminPassword").value;
+    const hash = await sha256(pw);
+    if (hash === adminPasswordHash) {
+      isAdmin = true;
+      document.getElementById("adminModal").style.display = "none";
+      document.getElementById("adminError").style.display = "none";
+
+      if (pendingDeleteId) {
+        db.ref("comments/" + pendingDeleteId).remove();
+        pendingDeleteId = null;
+      }
+
+    document.getElementById("adminPassword").addEventListener("keydown", function (event) {
+      if (event.key === "Enter") {
+        verifyAdmin();
+      }
+    });
+
+      loadComments();
+    } else {
+      document.getElementById("adminError").style.display = "block";
+    }
+  }
+
+  // 페이지 로드시 댓글만 불러오기
+  window.onload = function () {
+    loadComments();
+
+      // 엔터키로 관리자 인증
+      document.getElementById("adminPassword").addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+          verifyAdmin();
+        }
+      });
+  };
+
 </script>
 
-   <!-- 푸터 -->
   <footer class="footer">
     <p>ⓒ 2025 DBpiaje. All rights reserved.</p>
     <p>문의: yangsejin811@gmail.com</p>
+  </footer>
+
+  <!-- 관리자 비밀번호 입력 모달 -->
+<div id="adminModal" class="modal-overlay">
+  <div class="modal-box">
+    <h2>관리자 인증</h2>
+    <input type="password" id="adminPassword" placeholder="관리자 비밀번호 입력">
+    <button onclick="verifyAdmin()">확인</button>
+    <p id="adminError" style="color: red; display: none;">비밀번호가 틀렸습니다.</p>
+  </div>
+</div>
+
+<!--댓글 삭제 버튼 관련-->
+<style>
+
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.7);
+  display: none; /* 기본값을 none으로 바꿈 */
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+.modal-box {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  text-align: center;
+}
+.modal-box input {
+  padding: 10px;
+  width: 80%;
+  margin-top: 10px;
+}
+.modal-box button {
+  margin-top: 15px;
+  padding: 10px 20px;
+}
+</style>
+
 </body>
 </html>

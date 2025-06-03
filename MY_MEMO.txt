@@ -4,4 +4,3 @@
 
 호스팅은-github
 
-서브 도메인 주소는- dbpiaje.mooo.org

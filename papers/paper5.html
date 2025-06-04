@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DBpiaje | Paper Page</title>
   <link rel="icon" href="../img/pepe.jpeg" type="image/png" />
   <link rel="stylesheet" href="../style1.css" />
@@ -24,8 +25,15 @@
       margin: 0;
     }
 
-    .banner h1 { font-size: 4rem; margin: 0; }
-    .banner p { font-size: 1rem; margin: 5px 0 0 0; }
+    .banner h1 {
+      font-size: 4rem;
+      margin: 0;
+    }
+
+    .banner p {
+      font-size: 1rem;
+      margin: 5px 0 0 0;
+    }
 
     .paper-container {
       display: none;
@@ -36,16 +44,26 @@
     }
 
     @media (max-width: 600px) {
-      .banner { height: 100px; }
-      .banner h1 { font-size: 7vw; }
-      .banner p { font-size: 0.9rem; }
+      .banner {
+        height: 100px;
+      }
+
+      .banner h1 {
+        font-size: 7vw;
+      }
+
+      .banner p {
+        font-size: 0.9rem;
+      }
     }
 
     /* 모달 스타일 */
     .modal-overlay {
       position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       background: rgba(0, 0, 0, 0.7);
       display: flex;
       justify-content: center;
@@ -58,7 +76,7 @@
       padding: 30px;
       border-radius: 10px;
       text-align: center;
-      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
     }
 
     .modal-box input {
@@ -91,23 +109,36 @@
     }
   </style>
 </head>
+
 <body>
 
   <div class="banner">
     <h1><i>DBpiaje</i>🕓-논문페이지</h1>
   </div>
 
-  <!-- 사이드바 메뉴 -->
-  <aside class="sidebar">
-    <h3>메뉴</h3>
-    <a class="menu-button" href="../index.html">홈</a>
-    <a class="menu-button" href="../paper.html">논문</a>
-    <a class="menu-button" href="../ask.html">문의</a>
+  <!-- 사이드바 toggle 버튼 -->
+  <button id="toggleSidebar" class="sidebar-toggle">☰</button>
+
+  <!--메뉴-->
+  <aside id="sidebar" class="sidebar">
+    <h3>ㅤ</h3>
+    <a class="menu-button" href="../index.html">🏠홈</a>
+    <a class="menu-button" href="../paper.html">📄논문</a>
+    <a class="menu-button" href="../community.html">💬공식 커뮤니티</a>
+    <a class="menu-button" href="../ask.html">❓문의</a>
+    <a class="menu-button" href="../patch_note.html">📝패치 노트</a>
+    <!-- 다크모드 토글 버튼 -->
+    <div class="toggle-container">
+      <label class="switch">
+        <input type="checkbox" id="darkModeToggle">
+        <span class="slider round"></span>
+      </label>
+      <span class="toggle-label">다크모드🌙</span>
   </aside>
 
   <!-- 논문 영역 -->
   <div class="paper-container" id="protected-content">
-    <p>모바일에서는 PDF 일부만 보일 수 있습니다. 
+    <p>모바일에서는 PDF 일부만 보일 수 있습니다.
       <a href="../papers_archive/아가방 이론.pdf" download>논문 다운로드</a>
     </p>
     <!-- iframe은 JavaScript로 삽입됨 -->
@@ -157,7 +188,10 @@
     document.getElementById("password-input").addEventListener("keydown", function (e) {
       if (e.key === "Enter") checkPassword();
     });
+
   </script>
+  <script src="../javascript/sidebar.js"></script>
 
 </body>
+
 </html>

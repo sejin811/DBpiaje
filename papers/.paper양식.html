@@ -1,14 +1,15 @@
 <!-- paper양식임 페이지 추가 할 때마다 여기서 복붙하기 -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DBpiaje | Paper Page</title>
-    <link rel="icon" href="../img/pepe.jpeg" type="image/png">
-    <!-- CSS파일 연결 --> 
-   <link rel="stylesheet" href="../style1.css">
-   <style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DBpiaje | Paper Page</title>
+  <link rel="icon" href="../img/pepe.jpeg" type="image/png">
+  <!-- CSS파일 연결 -->
+  <link rel="stylesheet" href="../style1.css">
+  <style>
     .banner {
       background-image: url('https://img.freepik.com/fotos-kostenlos/welliger-schwarz-weisser-hintergrund_23-2150530917.jpg?semt=ais_hybrid&w=740');
       background-size: cover;
@@ -18,7 +19,8 @@
       font-family: Arial, sans-serif;
 
       /* 가로로 길고 얇은 배너 */
-      height: 120px; /* 원하는 높이로 조절 */
+      height: 120px;
+      /* 원하는 높이로 조절 */
       width: 100%;
 
       display: flex;
@@ -55,48 +57,65 @@
       }
     }
 
-     /* 모바일 확대를 위해 터치 확대 허용 */
+    /* 모바일 확대를 위해 터치 확대 허용 */
     @media (max-width: 600px) {
       .paper-container img {
         touch-action: pan-x pan-y;
       }
     }
-    
-    
 
-     .paper-container img {
+
+
+    .paper-container img {
       width: 100%;
       height: auto;
-      max-width: 800px; /* 논문 최대 너비 제한 */
+      max-width: 800px;
+      /* 논문 최대 너비 제한 */
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
 
     .paper-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 2rem;
-}
-   </style>
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+    }
+  </style>
 </head>
+
 <body>
 
-       <!--배너-->
+  <!--배너-->
   <div class="banner">
     <h1><i>DBpiaje</i>🕓-논문페이지</h1>
   </div>
 
+  <!-- 사이드바 toggle 버튼 -->
+  <button id="toggleSidebar" class="sidebar-toggle">☰</button>
+
   <!--메뉴-->
-  <aside class="sidebar">
-  <h3>메뉴</h3>
-  <a class="menu-button" href="../index.html">홈</a>
-  <a class="menu-button" href="../paper.html">논문</a>
-  <a class="menu-button" href="../ask.html">문의</a>
+  <aside id="sidebar" class="sidebar">
+    <h3>ㅤ</h3>
+    <a class="menu-button" href="../index.html">🏠홈</a>
+    <a class="menu-button" href="../paper.html">📄논문</a>
+    <a class="menu-button" href="../community.html">💬공식 커뮤니티</a>
+    <a class="menu-button" href="../ask.html">❓문의</a>
+    <a class="menu-button" href="../patch_note.html">📝패치 노트</a>
+    <!-- 다크모드 토글 버튼 -->
+    <div class="toggle-container">
+      <label class="switch">
+        <input type="checkbox" id="darkModeToggle">
+        <span class="slider round"></span>
+      </label>
+      <span class="toggle-label">다크모드🌙</span>
   </aside>
+
 
   <p>모바일에서는 PDF 일부만 보일 수 있습니다. <a href="../상대경로" download>논문 다운로드</a></p>
   <div class="paper-container">
     <iframe src="../상대경로" width="100%" height="1000px" alt="논문 이미지"></iframe>
   </div>
-  
+  <script src="../javascript/sidebar.js"></script>
+</body>
+
 </html>

@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DBpiaje | Paper Page</title>
-    <link rel="icon" href="img/pepe.jpeg" type="image/png">
-    <!-- CSS파일 연결 --> 
-   <link rel="stylesheet" href="style1.css">
-   <style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DBpiaje | Paper Page</title>
+  <link rel="icon" href="img/pepe.jpeg" type="image/png">
+  <!-- CSS파일 연결 -->
+  <link rel="stylesheet" href="style1.css">
+  <style>
     .banner {
       background-image: url('https://img.freepik.com/fotos-kostenlos/welliger-schwarz-weisser-hintergrund_23-2150530917.jpg?semt=ais_hybrid&w=740');
       background-size: cover;
@@ -17,7 +18,8 @@
       font-family: Arial, sans-serif;
 
       /* 가로로 길고 얇은 배너 */
-      height: 120px; /* 원하는 높이로 조절 */
+      height: 120px;
+      /* 원하는 높이로 조절 */
       width: 100%;
 
       display: flex;
@@ -53,90 +55,107 @@
         font-size: 0.9rem;
       }
     }
-   </style>
+  </style>
 
-   <!--논문 선택 버튼 CSS-->
-   <style>
-  .paper-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    padding: 40px;
-  }
-
-  .paper-card {
-    width: 220px;
-    height: 150px;
-    background-color: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    text-decoration: none;
-    color: #333;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 20px;
-    font-weight: bold;
-    transition: transform 0.3s, box-shadow 0.3s;
-  }
-
-  .paper-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-    background-color: #f8f8f8;
-  }
-
-  /* ✅ 스마트폰에서 2개씩 정렬 */
-  @media (max-width: 600px) {
+  <!--논문 선택 버튼 CSS-->
+  <style>
     .paper-container {
-      gap: 10px;
-      padding: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 40px;
     }
 
     .paper-card {
-      width: calc(50% - 10px); /* 전체의 50% - 여백 */
-      height: 120px;
-      font-size: 14px;
-      padding: 10px;
+      width: 220px;
+      height: 150px;
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      text-decoration: none;
+      color: #333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+      font-weight: bold;
+      transition: transform 0.3s, box-shadow 0.3s;
     }
-  }
-   </style>
+
+    .paper-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      background-color: #f8f8f8;
+    }
+
+    /* ✅ 스마트폰에서 2개씩 정렬 */
+    @media (max-width: 600px) {
+      .paper-container {
+        gap: 10px;
+        padding: 10px;
+      }
+
+      .paper-card {
+        width: calc(50% - 10px);
+        /* 전체의 50% - 여백 */
+        height: 120px;
+        font-size: 14px;
+        padding: 10px;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-    <!--배너-->
+  <!--배너-->
   <div class="banner">
     <h1><i>DBpiaje</i>🕓-논문페이지</h1>
   </div>
 
+  <!-- 사이드바 toggle 버튼 -->
+  <button id="toggleSidebar" class="sidebar-toggle">☰</button>
+
   <!--메뉴-->
-  <aside class="sidebar">
-  <h3>메뉴</h3>
-  <a class="menu-button" href="index.html">홈</a>
-  <a class="menu-button" href="paper.html">논문</a>
-  <a class="menu-button" href="ask.html">문의</a>
-</aside>
+  <aside id="sidebar" class="sidebar">
+    <h3>ㅤ</h3>
+    <a class="menu-button" href="index.html">🏠홈</a>
+    <a class="menu-button" href="paper.html">📄논문</a>
+    <a class="menu-button" href="community.html">💬공식 커뮤니티</a>
+    <a class="menu-button" href="ask.html">❓문의</a>
+    <a class="menu-button" href="patch_note.html">📝패치 노트</a>
+    <!-- 다크모드 토글 버튼 -->
+    <div class="toggle-container">
+      <label class="switch">
+        <input type="checkbox" id="darkModeToggle">
+        <span class="slider round"></span>
+      </label>
+      <span class="toggle-label">다크모드🌙</span>
+  </aside>
 
-<!--논문 선택-->
-<main class="main-content">
-      <h2 style="text-align: center;" >[열람할 논문을 선택하세요]</h2>
+  <!--논문 선택-->
+  <main class="main-content">
+    <h2 style="text-align: center;">[열람할 논문을 선택하세요]</h2>
 
-      <div class="paper-container">
-        <a class="paper-card" href="papers/paper1.html">유대감 형성 이론<br>저자: 양세진</a>
-        <a class="paper-card" href="papers/paper2.html">떨어짐 이론<br>저자: 양세진</a>
-        <a class="paper-card" href="papers/paper3.html">양재선 김치 이론<br>저자: 양세진<br><br>⚠️열람에 주의를 요함</a>
-        <a class="paper-card" href="papers/paper4.html">재선 신드롬<br>저자: 익명의 사나이<br><br>(노벨상 수상 예정)</a>
-        <a class="paper-card" href="papers/paper5.html">아가방 이론<br>저자: 익명(신변 보호)<br><br>⚠️접근 제한 논문</a>
-        <!--<a class="paper-card" href="https://example.com" target="_blank">외부 논문<br>ChatGPT 연구</a> -->
-      </div>
-    </main>
+    <div class="paper-container">
+      <a class="paper-card" href="papers/paper1.html">유대감 형성 이론<br>저자: DBpiaje관리자</a>
+      <a class="paper-card" href="papers/paper2.html">떨어짐 이론<br>저자: DBpiaje관리자</a>
+      <a class="paper-card" href="papers/paper3.html">양재선 김치 이론<br>저자: DBpiaje관리자<br><br>⚠️열람에 주의를 요함</a>
+      <a class="paper-card" href="papers/paper4.html">재선 신드롬<br>저자: 익명의 사나이<br><br>(노벨상 수상 예정)</a>
+      <a class="paper-card" href="papers/paper5.html">아가방 이론<br>저자: 익명(신변 보호)<br><br>⚠️접근 제한 논문</a>
+      <!--<a class="paper-card" href="https://example.com" target="_blank">외부 논문<br>ChatGPT 연구</a> -->
+    </div>
+  </main>
   </div>
 
-     <!-- 푸터 -->
+  <!-- 푸터 -->
   <footer class="footer">
     <p>ⓒ 2025 DBpiaje. All rights reserved.</p>
     <p>문의: yangsejin811@gmail.com</p>
+  </footer>
+  <script src="javascript/sidebar.js"></script>
 </body>
+
 </html>

@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>DBpiaje | ask</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DBpiaje | Ask Page</title>
   <link rel="icon" href="img/pepe.jpeg" type="image/png" />
   <link rel="stylesheet" href="style2.css" />
   <style>
@@ -23,13 +24,28 @@
       margin: 0;
     }
 
-    .banner h1 { font-size: 4rem; margin: 0; }
-    .banner p { font-size: 1rem; margin: 5px 0 0 0; }
+    .banner h1 {
+      font-size: 4rem;
+      margin: 0;
+    }
+
+    .banner p {
+      font-size: 1rem;
+      margin: 5px 0 0 0;
+    }
 
     @media (max-width: 600px) {
-      .banner { height: 100px; }
-      .banner h1 { font-size: 7vw; }
-      .banner p { font-size: 0.9rem; }
+      .banner {
+        height: 100px;
+      }
+
+      .banner h1 {
+        font-size: 7vw;
+      }
+
+      .banner p {
+        font-size: 0.9rem;
+      }
     }
 
     .comment-card {
@@ -50,22 +66,37 @@
     }
   </style>
 </head>
+
 <body>
   <div class="banner">
     <h1><i>DBpiaje</i>🕓-문의 페이지</h1>
   </div>
 
-  <aside class="sidebar">
-    <h3>메뉴</h3>
-    <a class="menu-button" href="./index.html">홈</a>
-    <a class="menu-button" href="./paper.html">논문</a>
-    <a class="menu-button" href="./ask.html">문의</a>
+
+  <!-- 사이드바 toggle 버튼 -->
+  <button id="toggleSidebar" class="sidebar-toggle">☰</button>
+
+  <aside id="sidebar" class="sidebar">
+    <h3>ㅤ</h3>
+    <a class="menu-button" href="index.html">🏠홈</a>
+    <a class="menu-button" href="paper.html">📄논문</a>
+    <a class="menu-button" href="community.html">💬공식 커뮤니티</a>
+    <a class="menu-button" href="ask.html">❓문의</a>
+    <a class="menu-button" href="patch_note.html">📝패치 노트</a>
+    <!-- 다크모드 토글 버튼 -->
+    <div class="toggle-container">
+      <label class="switch">
+        <input type="checkbox" id="darkModeToggle">
+        <span class="slider round"></span>
+      </label>
+      <span class="toggle-label">다크모드🌙</span>
   </aside>
 
   <!-- 공지사항 -->
   <div class="notice-box">
     <h2>📢 공지사항</h2>
-    <b>댓글에 자유롭게 의견을 써보세요!(*규칙: 욕설금지/무지성 비난 금지/특정인물 비하 금지*)<br>문의 이메일 주소 <b style="color: blue;">yangsejin811@gmail.com</b></b>
+    <b>댓글에 자유롭게 의견을 써보세요!(*규칙: 욕설금지/무지성 비난 금지/특정인물 비하 금지*)<br>문의 이메일 주소 <b
+        style="color: rgb(89, 89, 250);">yangsejin811@gmail.com</b></b>
     <br><br>
     <b style="color: rgb(245, 101, 30);">[자주 묻는 질문]</b><br>
     <b>Q. 논문을 기재하고 싶은데 어떻게 해야 하나요?</b><br>
@@ -73,7 +104,7 @@
     <b>Q. 논문 주제는 꼭 '양재선'이라는 생명체와 관련이 있어야 하나요?</b><br>
     <b>A. 논문 주제는 자유입니다.</b><br><br>
     <b>Q. 개발자에게 후원하고 싶은데 어떻게 해야하나요? (급함 ㅠㅠ)</b><br>
-    <b>A. <b style="color: rgb(0, 0, 0);">7777032890798 카카오뱅크🥴</b></b>
+    <b>A. 7777032890798 카카오뱅크🥴</b>
   </div>
 
   <form id="commentForm">
@@ -90,123 +121,123 @@
 
   <!--댓글 기능 구현을 위한 firebase 셋팅과 댓글 기능 script-->
   <script>
-  
-  const firebaseConfig = {
-    apiKey: "AIzaSyCm6nslSJF8RQgjN3h4z-awLbObhM1FTVw",
-    authDomain: "dbpiaje.firebaseapp.com",
-    projectId: "dbpiaje",
-    storageBucket: "dbpiaje.firebasestorage.app",
-    messagingSenderId: "590808126930",
-    appId: "1:590808126930:web:4eb9e5e754674435df240b",
-    measurementId: "G-LGKY04RMLR"
-  };
 
-  firebase.initializeApp(firebaseConfig);
-  const db = firebase.database();
+    const firebaseConfig = {
+      apiKey: "AIzaSyCm6nslSJF8RQgjN3h4z-awLbObhM1FTVw",
+      authDomain: "dbpiaje.firebaseapp.com",
+      projectId: "dbpiaje",
+      storageBucket: "dbpiaje.firebasestorage.app",
+      messagingSenderId: "590808126930",
+      appId: "1:590808126930:web:4eb9e5e754674435df240b",
+      measurementId: "G-LGKY04RMLR"
+    };
 
-  let isAdmin = false;
-  let pendingDeleteId = null;
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
 
-  document.getElementById("commentForm").addEventListener("submit", function (e) {
-    e.preventDefault();
-    const name = document.getElementById("name").value;
-    const comment = document.getElementById("comment").value;
+    let isAdmin = false;
+    let pendingDeleteId = null;
 
-    db.ref("comments").push({
-      name,
-      comment,
-      created_at: new Date().toISOString()
+    document.getElementById("commentForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const name = document.getElementById("name").value;
+      const comment = document.getElementById("comment").value;
+
+      db.ref("comments").push({
+        name,
+        comment,
+        created_at: new Date().toISOString()
+      });
+
+      document.getElementById("commentForm").reset();
     });
-
-    document.getElementById("commentForm").reset();
-  });
 
     function loadComments() {
-    db.ref("comments").on("value", snapshot => {
-      const data = snapshot.val();
-      const list = document.getElementById("commentList");
-      list.innerHTML = "";
-  
-      if (!data) return;
-  
-      // 댓글을 배열로 변환하고, 최신순으로 정렬
-      const sortedComments = Object.entries(data).sort((a, b) => {
-        return new Date(b[1].created_at) - new Date(a[1].created_at);
+      db.ref("comments").on("value", snapshot => {
+        const data = snapshot.val();
+        const list = document.getElementById("commentList");
+        list.innerHTML = "";
+
+        if (!data) return;
+
+        // 댓글을 배열로 변환하고, 최신순으로 정렬
+        const sortedComments = Object.entries(data).sort((a, b) => {
+          return new Date(b[1].created_at) - new Date(a[1].created_at);
+        });
+
+        // 정렬된 댓글 렌더링
+        for (let [id, c] of sortedComments) {
+          const div = document.createElement("div");
+          div.className = "comment-card";
+
+          const content = document.createElement("div");
+          content.innerHTML = `<strong>${c.name}</strong> (${new Date(c.created_at).toLocaleString()}):<br>${c.comment}`;
+
+          div.appendChild(content);
+
+          const delBtn = document.createElement("button");
+          delBtn.textContent = "삭제";
+          delBtn.className = "delete-button";
+          delBtn.onclick = () => requestDelete(id);
+          div.appendChild(delBtn);
+
+          list.appendChild(div);
+        }
       });
-  
-      // 정렬된 댓글 렌더링
-      for (let [id, c] of sortedComments) {
-        const div = document.createElement("div");
-        div.className = "comment-card";
-  
-        const content = document.createElement("div");
-        content.innerHTML = `<strong>${c.name}</strong> (${new Date(c.created_at).toLocaleString()}):<br>${c.comment}`;
-  
-        div.appendChild(content);
-  
-        const delBtn = document.createElement("button");
-        delBtn.textContent = "삭제";
-        delBtn.className = "delete-button";
-        delBtn.onclick = () => requestDelete(id);
-        div.appendChild(delBtn);
-  
-        list.appendChild(div);
-      }
-    });
-  }
-
-  // 삭제 요청 시 관리자 비밀번호 요구
-  function requestDelete(id) {
-    if (isAdmin) {
-      if (confirm("정말 삭제하시겠습니까?")) {
-        db.ref("comments/" + id).remove();
-      }
-    } else {
-      pendingDeleteId = id;
-      document.getElementById("adminModal").style.display = "flex";
     }
-  }
 
-  // SHA-256 해시 함수
-  async function sha256(message) {
-    const msgBuffer = new TextEncoder().encode(message);
-    const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-    return hashHex;
-  }
-
-  const adminPasswordHash = "1a36ea191cd5abd1c2ebd694de6dc5f1bb83661a77176d1b5524645b2ec00668"; 
-  // 비밀번호 해시값
-
-  async function verifyAdmin() {
-    const pw = document.getElementById("adminPassword").value;
-    const hash = await sha256(pw);
-    if (hash === adminPasswordHash) {
-      isAdmin = true;
-      document.getElementById("adminModal").style.display = "none";
-      document.getElementById("adminError").style.display = "none";
-
-      if (pendingDeleteId) {
-        db.ref("comments/" + pendingDeleteId).remove();
-        pendingDeleteId = null;
+    // 삭제 요청 시 관리자 비밀번호 요구
+    function requestDelete(id) {
+      if (isAdmin) {
+        if (confirm("정말 삭제하시겠습니까?")) {
+          db.ref("comments/" + id).remove();
+        }
+      } else {
+        pendingDeleteId = id;
+        document.getElementById("adminModal").style.display = "flex";
       }
+    }
 
-    document.getElementById("adminPassword").addEventListener("keydown", function (event) {
-      if (event.key === "Enter") {
-        verifyAdmin();
+    // SHA-256 해시 함수
+    async function sha256(message) {
+      const msgBuffer = new TextEncoder().encode(message);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+      return hashHex;
+    }
+
+    const adminPasswordHash = "1a36ea191cd5abd1c2ebd694de6dc5f1bb83661a77176d1b5524645b2ec00668";
+    // 비밀번호 해시값
+
+    async function verifyAdmin() {
+      const pw = document.getElementById("adminPassword").value;
+      const hash = await sha256(pw);
+      if (hash === adminPasswordHash) {
+        isAdmin = true;
+        document.getElementById("adminModal").style.display = "none";
+        document.getElementById("adminError").style.display = "none";
+
+        if (pendingDeleteId) {
+          db.ref("comments/" + pendingDeleteId).remove();
+          pendingDeleteId = null;
+        }
+
+        document.getElementById("adminPassword").addEventListener("keydown", function (event) {
+          if (event.key === "Enter") {
+            verifyAdmin();
+          }
+        });
+
+        loadComments();
+      } else {
+        document.getElementById("adminError").style.display = "block";
       }
-    });
+    }
 
+    // 페이지 로드시 댓글만 불러오기
+    window.onload = function () {
       loadComments();
-    } else {
-      document.getElementById("adminError").style.display = "block";
-    }
-  }
-
-  // 페이지 로드시 댓글만 불러오기
-  window.onload = function () {
-    loadComments();
 
       // 엔터키로 관리자 인증
       document.getElementById("adminPassword").addEventListener("keydown", function (event) {
@@ -214,17 +245,17 @@
           verifyAdmin();
         }
       });
-  };
+    };
 
-  //댓글 삭제 버튼 누를 시 나오는 관리자 인증 창 취소 기능 구현
-  function cancelAdmin() {
-  document.getElementById("adminModal").style.display = "none";
-  document.getElementById("adminPassword").value = "";
-  document.getElementById("adminError").style.display = "none";
-  pendingDeleteId = null; // 삭제 대기 취소
-}
+    //댓글 삭제 버튼 누를 시 나오는 관리자 인증 창 취소 기능 구현
+    function cancelAdmin() {
+      document.getElementById("adminModal").style.display = "none";
+      document.getElementById("adminPassword").value = "";
+      document.getElementById("adminError").style.display = "none";
+      pendingDeleteId = null; // 삭제 대기 취소
+    }
 
-</script>
+  </script>
 
   <footer class="footer">
     <p>ⓒ 2025 DBpiaje. All rights reserved.</p>
@@ -232,47 +263,53 @@
   </footer>
 
   <!-- 관리자 비밀번호 입력 모달 -->
-<div id="adminModal" class="modal-overlay">
-  <div class="modal-box">
-    <h2>관리자 인증</h2>
-    <input type="password" id="adminPassword" placeholder="관리자 비밀번호 입력">
-     <div style="margin-top: 15px;">
-      <button onclick="verifyAdmin()">확인</button>
-      <button onclick="cancelAdmin()">취소</button>
+  <div id="adminModal" class="modal-overlay">
+    <div class="modal-box">
+      <h2>관리자 인증</h2>
+      <input type="password" id="adminPassword" placeholder="관리자 비밀번호 입력">
+      <div style="margin-top: 15px;">
+        <button onclick="verifyAdmin()">확인</button>
+        <button onclick="cancelAdmin()">취소</button>
       </div>
-    <p id="adminError" style="color: red; display: none;">비밀번호가 틀렸습니다.</p>
+      <p id="adminError" style="color: red; display: none;">비밀번호가 틀렸습니다.</p>
+    </div>
   </div>
-</div>
 
-<!--댓글 삭제 버튼 관련-->
-<style>
+  <!--댓글 삭제 버튼 관련-->
+  <style>
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      display: none;
+      /* 기본값을 none으로 바꿈 */
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
 
-.modal-overlay {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.7);
-  display: none; /* 기본값을 none으로 바꿈 */
-  justify-content: center;
-  align-items: center;
-  z-index: 999;
-}
-.modal-box {
-  background: white;
-  padding: 2rem;
-  border-radius: 10px;
-  text-align: center;
-}
-.modal-box input {
-  padding: 10px;
-  width: 80%;
-  margin-top: 10px;
-}
-.modal-box button {
-  margin-top: 15px;
-  padding: 10px 20px;
-}
-</style>
+    .modal-box {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      text-align: center;
+    }
 
+    .modal-box input {
+      padding: 10px;
+      width: 80%;
+      margin-top: 10px;
+    }
+
+    .modal-box button {
+      margin-top: 15px;
+      padding: 10px 20px;
+    }
+  </style>
+  <script src="javascript/sidebar.js"></script>
 </body>
+
 </html>

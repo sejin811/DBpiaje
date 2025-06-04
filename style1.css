@@ -1,14 +1,47 @@
-.layout {
-  display: flex;
-  min-height: 100vh; /* 화면 전체 높이 */
+/* -------------------- 기본 스타일 -------------------- */
+body {
+  background-color: white;
+  color: black;
 }
 
-/* 왼쪽 메뉴 영역 */
+body.dark-mode {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+/* 링크 및 버튼 색상 다크모드 적용 */
+body.dark-mode a,
+body.dark-mode .menu-button {
+  color: #ddd;
+  background-color: #333;
+}
+
+body.dark-mode a {
+  color: #90caf9; /* 밝은 파란색 링크 */
+}
+
+/* -------------------- 레이아웃 -------------------- */
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* -------------------- 사이드바 -------------------- */
 .sidebar {
-  width: 220px;
-  background-color: #f0f0f0;
-  padding: 20px;
-  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 180px;
+  height: 100%;
+  background-color: #f4f4f4;
+  padding: 10px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  z-index: 1000;
+}
+
+.sidebar.hide {
+  transform: translateX(-100%);
 }
 
 .sidebar h3 {
@@ -29,16 +62,41 @@
   color: #333;
 }
 
-/* 오른쪽 본문 영역 */
+/* 다크모드 사이드바 */
+body.dark-mode .sidebar {
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+}
+
+/* -------------------- 사이드바 토글 버튼 -------------------- */
+.sidebar-toggle {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 1100;
+  background-color: #444;
+  color: white;
+  border: none;
+  padding: 6px 6px;
+  cursor: pointer;
+  font-size: 20px;
+  border-radius: 4px;
+}
+
+/* -------------------- 본문 영역 -------------------- */
 .main-content {
   flex: 1;
   padding: 40px;
-  background-color: #fff;
+  background-color: #d9d8d8;
 }
 
+/* 다크모드 본문 */
+body.dark-mode .main-content {
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+}
 
-
-/* 사이드바 버튼 */
+/* -------------------- 메뉴 버튼 -------------------- */
 .menu-button {
   display: block;
   background-color: #ffffff;
@@ -57,14 +115,23 @@
   background-color: #e0e0e0;
 }
 
-/* 본문 내용 */
-.main-content {
-  flex: 1;
-  padding: 40px;
-  background-color: #d9d8d8;
+/* -------------------- 다운로드 버튼 -------------------- */
+.download-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #2a6ed1;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
 }
 
-/*하단 푸터(페이지 맨 밑에 있는거)*/
+.download-button:hover {
+  background-color: #1c4d99;
+}
+
+/* -------------------- 푸터 -------------------- */
 .footer {
   background-color: #f2f2f2;
   text-align: center;
@@ -79,29 +146,110 @@
   margin: 5px 0;
 }
 
-/* 모바일 대응 */
+body.dark-mode .footer {
+  background-color: #1a1a1a;
+  color: #aaa;
+}
+
+/* -------------------- 다크모드 공통 -------------------- */
+body.dark-mode .main-content,
+body.dark-mode .footer {
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+}
+
+/* -------------------- 다크모드 토글 스위치 -------------------- */
+.toggle-container {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  padding-left: 10px;
+}
+
+.toggle-label {
+  margin-left: 10px;
+  color: inherit;
+  font-size: 14px;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 22px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #4caf50;
+}
+
+input:checked + .slider:before {
+  transform: translateX(18px);
+}
+
+/* -------------------- 반응형 -------------------- */
 @media (max-width: 600px) {
-  footer {
+  .sidebar {
+    width: 40%;
+  }
+
+  .footer {
     font-size: 0.8rem;
     padding: 15px;
   }
 }
 
- 
-    /*논문 양식 다운로드 버튼*/
-  .download-button {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #2a6ed1;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    font-weight: bold;
-    transition: background-color 0.2s ease;
-  }
+body.dark-mode .modal-box {
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+}
 
-  .download-button:hover {
-    background-color: #1c4d99;
-  }
+body.dark-mode .modal-box input {
+  background-color: #333;
+  color: #f0f0f0;
+  border: 1px solid #666;
+}
 
-  
+body.dark-mode .modal-box button {
+  background-color: #444;
+  color: #fff;
+}
+
+body.dark-mode .modal-box button:hover {
+  background-color: #666;
+}
+
+body.dark-mode .error-text {
+  color: #ff6b6b;
+}

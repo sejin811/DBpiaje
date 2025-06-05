@@ -56,6 +56,34 @@
                 font-size: 0.9rem;
             }
         }
+
+        .collapse-btn {
+            margin: 10px 20px;
+            padding: 6px 12px;
+            background-color: #2a6ed1;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .collapse-btn:hover {
+            background-color: #1d56aa;
+        }
+
+        body.dark-mode .collapse-btn {
+            background-color: #444;
+            color: #f0f0f0;
+        }
+
+        body.dark-mode .collapse-btn:hover {
+            background-color: #555;
+        }
+
+        /* 접힌 상태 */
+        .music-bar.collapsed {
+            display: none;
+        }
     </style>
 
     <!--노래틀기 스타일 시트-->
@@ -191,6 +219,61 @@
         body.dark-mode #progress-bar::-webkit-slider-thumb {
             background: #ccc;
         }
+
+        /*반응형 추가*/
+        @media (max-width: 600px) {
+            .music-bar {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 10px;
+            }
+
+            .progress-container {
+                flex-direction: column;
+                align-items: stretch;
+                margin: 10px;
+                gap: 8px;
+            }
+
+            #now-playing {
+                margin-left: 0;
+                margin-top: 10px;
+            }
+
+            .song-btn,
+            #toggle-play {
+                width: 100%;
+                font-size: 0.95rem;
+            }
+        }
+
+        .collapse-btn {
+            margin: 10px 20px;
+            padding: 6px 12px;
+            background-color: #2a6ed1;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .collapse-btn:hover {
+            background-color: #1d56aa;
+        }
+
+        body.dark-mode .collapse-btn {
+            background-color: #444;
+            color: #f0f0f0;
+        }
+
+        body.dark-mode .collapse-btn:hover {
+            background-color: #555;
+        }
+
+        /* 접힌 상태를 위한 클래스 */
+        #music-bar.collapsed {
+            display: none;
+        }
     </style>
 </head>
 
@@ -224,7 +307,10 @@
     </aside>
 
     <!--노래 틀기-->
-    <div class="music-bar">
+    <!-- 접기/펼치기 토글 버튼 -->
+    <button id="toggle-music-bar" class="collapse-btn">🎵 노래 메뉴 접기/펼치기</button>
+
+    <div id="music-bar" class="music-bar">
         <div class="progress-container">
             <span id="current-time">0:00</span>
             <input type="range" id="progress-bar" value="0" min="0" max="100" step="1">
@@ -317,6 +403,12 @@
         // 사용자가 바를 움직일 때 위치 변경
         progressBar.addEventListener("input", () => {
             audioPlayer.currentTime = progressBar.value;
+        });
+
+        // 노래 선택 부분 접기 기능
+        document.getElementById("toggle-music-bar").addEventListener("click", function () {
+            const bar = document.getElementById("music-bar");
+            bar.classList.toggle("collapsed");
         });
     </script>
 </body>

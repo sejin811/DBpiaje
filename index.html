@@ -62,6 +62,111 @@
       }
     }
   </style>
+
+  <!-- 공지사항 팝업 모달 창 css-->
+  <style>
+    .popup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .popup-box {
+      background: white;
+      padding: 40px 30px;
+      border-radius: 12px;
+      text-align: center;
+      max-width: 500px;
+      width: 90%;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      animation: popup-fadein 0.3s ease;
+    }
+
+    .popup-box h2 {
+      font-size: 1.8rem;
+      margin-bottom: 15px;
+    }
+
+    .popup-box p {
+      font-size: 1.1rem;
+      margin-bottom: 25px;
+      line-height: 1.6;
+    }
+
+    .popup-box button {
+      margin: 5px;
+      padding: 10px 20px;
+      background-color: #2a6ed1;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.2s ease;
+    }
+
+    .popup-box button:hover {
+      background-color: #1d56aa;
+    }
+
+    @keyframes popup-fadein {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    /* 기존 팝업 스타일은 그대로 유지한 채, 다크모드일 때를 아래에 추가 */
+    body.dark-mode .popup-box {
+      background: #222;
+      /* 어두운 배경 */
+      color: #f0f0f0;
+      /* 밝은 텍스트 */
+      box-shadow: 0 8px 20px rgba(255, 255, 255, 0.1);
+    }
+
+    body.dark-mode .popup-box button {
+      background-color: #444;
+      color: #f0f0f0;
+    }
+
+    body.dark-mode .popup-box button:hover {
+      background-color: #555;
+    }
+
+    @media (max-width: 600px) {
+  .popup-box {
+    width: 95%;
+    padding: 30px 20px;
+    font-size: 0.95rem;
+  }
+
+  .popup-box h2 {
+    font-size: 1.4rem;
+  }
+
+  .popup-box p {
+    font-size: 1rem;
+  }
+
+  .popup-box button {
+    font-size: 0.95rem;
+    padding: 8px 16px;
+  }
+}
+  </style>
 </head>
 
 <body>
@@ -117,6 +222,43 @@
     <p>문의: yangsejin811@gmail.com</p>
   </footer>
   <script src="javascript/sidebar.js"></script>
+
+  <!-- 공지사항 팝업 모달 창 -->
+  <div id="firstVisitPopup" class="popup-overlay">
+    <div class="popup-box">
+      <h2>📢 공지사항</h2>
+      <p style="color: red;">모바일 접속시 논문이 짤려 보입니다! <br> 확인 후 계속 이용해주세요.</p>
+      <p style="color: #2a6ed1; font-size: 25px; background-color: #efeeee;">DBpiaje는 '여러분'의 논문을 기다립니다! <br> (논문 양식 다운/작성 후 전송)</ㅠ>
+      <div>
+        <button id="popup-close">닫기</button>
+        <button id="popup-dont-show">오늘 하루 보지 않기</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 공지 사항 팝업 모달 창 -->
+  <script>
+    const popupKey = "firstVisitPopupShown";
+    const today = new Date().toDateString(); // 하루 기준
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const savedDate = localStorage.getItem(popupKey);
+      const popup = document.getElementById("firstVisitPopup");
+
+      if (savedDate !== today) {
+        popup.style.display = "flex";
+      }
+
+      document.getElementById("popup-close").addEventListener("click", () => {
+        popup.style.display = "none";
+      });
+
+      document.getElementById("popup-dont-show").addEventListener("click", () => {
+        localStorage.setItem(popupKey, today);
+        popup.style.display = "none";
+      });
+    });
+  </script>
 </body>
 
 </html>

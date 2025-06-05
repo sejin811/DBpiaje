@@ -156,8 +156,7 @@
   </div>
 
   <script>
-    <script>
-  const CORRECT_HASH = "2f5101a71d278dda8021bb4a33932a7a95f485683abe774f565c65f171f001f7"; // SHA-256 for '비번 힌트: 예아'
+  const CORRECT_HASH = "2f5101a71d278dda8021bb4a33932a7a95f485683abe774f565c65f171f001f7"; // SHA-256 for '예아'
 
   async function checkPassword() {
     const input = document.getElementById("password-input").value;
@@ -173,7 +172,7 @@
       container.style.display = "flex";
 
       const iframe = document.createElement("iframe");
-      iframe.src = "../papers_archive/아가방 이론.pdf"; // 실제 논문 경로로 수정
+      iframe.src = "../papers_archive/아가방 이론.pdf";
       iframe.width = "100%";
       iframe.height = "1000px";
       iframe.style.maxWidth = "800px";
@@ -186,17 +185,15 @@
     }
   }
 
-  // DOM이 완전히 로드된 후 이벤트 연결
   document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("password-input").addEventListener("keydown", function (e) {
       if (e.key === "Enter") checkPassword();
     });
 
-    // 버튼 클릭도 여기서 연결하는 게 좋음
-    document.querySelector("button[onclick='checkPassword()']")?.addEventListener("click", checkPassword);
+    // 버튼에도 이벤트 연결
+    document.getElementById("password-submit").addEventListener("click", checkPassword);
   });
 </script>
-  </script>
   <script src="../javascript/sidebar.js"></script>
 
 </body>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,11 +8,12 @@
   <link rel="icon" href="../img/pepe.jpeg" type="image/png" />
   <link rel="stylesheet" href="../style1.css" />
   <style>
-     .banner {
+    /* 배너 스타일 */
+    .banner {
       background-image: url('https://img.freepik.com/fotos-kostenlos/welliger-schwarz-weisser-hintergrund_23-2150530917.jpg?semt=ais_hybrid&w=740');
       background-size: cover;
       background-position: center;
-      color: rgb(255, 0, 0);
+      color: red;
       text-align: center;
       font-family: Arial, sans-serif;
       height: 120px;
@@ -20,7 +22,6 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      padding: 0;
       margin: 0;
     }
 
@@ -32,6 +33,14 @@
     .banner p {
       font-size: 1rem;
       margin: 5px 0 0 0;
+    }
+
+    .paper-container {
+      display: none;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      padding: 2rem;
     }
 
     @media (max-width: 600px) {
@@ -48,18 +57,55 @@
       }
     }
 
-    .paper-container img {
+    /* 모달 스타일 */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
       width: 100%;
-      height: auto;
-      max-width: 800px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .paper-container {
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 2rem;
+      z-index: 999;
+    }
+
+    .modal-box {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .modal-box input {
+      padding: 10px;
+      width: 80%;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+
+    .modal-box button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background: #2a6ed1;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .modal-box button:hover {
+      background: #1c4d99;
+    }
+
+    .error-text {
+      color: red;
+      margin-top: 10px;
+      display: none;
     }
   </style>
 </head>
@@ -90,7 +136,7 @@
 
   <div class="paper-container" id="protected-content">
     <p>
-      모바일에서는 PDF 일부만 보일 수 있습니다. 
+      모바일에서는 PDF 일부만 보일 수 있습니다.
       <a href="../papers_archive/아가방 이론.pdf" download>논문 다운로드</a>
     </p>
   </div>
@@ -144,4 +190,5 @@
 
   <script src="../javascript/sidebar.js"></script>
 </body>
+
 </html>

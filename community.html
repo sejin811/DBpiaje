@@ -9,6 +9,7 @@
     <!-- CSS파일 연결 -->
     <!-- 캐시 무효화 버전 -->
     <link rel="stylesheet" href="style1.css?v=1.0.3">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
         .banner {
             background-image: url('https://img.freepik.com/fotos-kostenlos/welliger-schwarz-weisser-hintergrund_23-2150530917.jpg?semt=ais_hybrid&w=740');
@@ -275,6 +276,538 @@
             display: none;
         }
     </style>
+
+    <!-- 게시물 스타일 시트 -->
+    <style>
+        /* 기본 설정 */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* 다크모드 */
+        body.dark-mode {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+
+        /* 글쓰기 폼 */
+        #writeForm {
+            display: none;
+            border: 1px solid #ccc;
+            padding: 12px;
+            border-radius: 5px;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto 20px auto;
+            background-color: #fff;
+            box-sizing: border-box;
+        }
+
+        body.dark-mode #writeForm {
+            background-color: #1e1e1e;
+            border-color: #444;
+        }
+
+        /* 입력 필드 */
+        #writeForm input,
+        #writeForm textarea {
+            width: 100%;
+            padding: 8px;
+            margin: 6px 0;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #fff;
+            color: #000;
+        }
+
+        body.dark-mode #writeForm input,
+        body.dark-mode #writeForm textarea {
+            background-color: #2b2b2b;
+            color: #e0e0e0;
+            border-color: #555;
+        }
+
+        /* 올리기 버튼 */
+        #postBtn {
+            display: block;
+            margin: 12px auto 0 auto;
+            padding: 8px 16px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #postBtn:hover {
+            background-color: #45a049;
+        }
+
+        /* 글 목록 */
+        #postsList {
+            list-style-type: none;
+            padding: 0;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            box-sizing: border-box;
+        }
+
+        #postsList li {
+            border: 1px solid #ccc;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            background-color: #fff;
+            box-sizing: border-box;
+        }
+
+        body.dark-mode #postsList li {
+            background-color: #1e1e1e;
+            border-color: #444;
+        }
+
+        /* 글 제목 */
+        .post-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 4px;
+        }
+
+        /* 작성자 정보 */
+        .post-meta {
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        body.dark-mode .post-meta {
+            color: #aaa;
+        }
+
+        /* 게시글 내용 */
+        .post-content {
+            margin: 8px 0;
+            white-space: pre-wrap;
+        }
+
+        /* 버튼 공통 스타일 (내용 펼치기 + 삭제 버튼) */
+        .toggle-content-btn,
+        .admin-delete-btn {
+            background-color: #2196f3;
+            color: white;
+            font-size: 14px;
+            padding: 6px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 6px;
+            margin-right: 8px;
+        }
+
+        .admin-delete-btn {
+            background-color: #e53935;
+        }
+
+        .admin-delete-btn:hover {
+            background-color: #c62828;
+        }
+
+        .toggle-content-btn:hover {
+            background-color: #1976d2;
+        }
+
+        /* 다크모드 버튼 */
+        body.dark-mode .toggle-content-btn {
+            background-color: #1565c0;
+            color: white;
+        }
+
+        body.dark-mode .toggle-content-btn:hover {
+            background-color: #0d47a1;
+        }
+
+        body.dark-mode .admin-delete-btn {
+            background-color: #b71c1c;
+        }
+
+        body.dark-mode .admin-delete-btn:hover {
+            background-color: #8e0000;
+        }
+
+        /* 글쓰기 버튼 */
+        #showWriteFormBtn {
+            display: block;
+            margin: 0 auto 20px auto;
+            padding: 10px 20px;
+            background-color: #1976d2;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #showWriteFormBtn:hover {
+            background-color: #1565c0;
+        }
+
+        /* 삭제 팝업 */
+        #deletePopup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        #deletePopupContent {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 6px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        body.dark-mode #deletePopupContent {
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+        }
+
+        #adminPwdInput {
+            margin-top: 10px;
+            padding: 6px;
+            width: 80%;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        body.dark-mode #adminPwdInput {
+            background-color: #2b2b2b;
+            color: #fff;
+            border-color: #555;
+        }
+
+        #confirmDeleteBtn,
+        #cancelDeleteBtn {
+            margin-top: 10px;
+            margin-right: 8px;
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #confirmDeleteBtn {
+            background-color: #d32f2f;
+            color: #fff;
+        }
+
+        #cancelDeleteBtn {
+            background-color: #9e9e9e;
+            color: #fff;
+        }
+
+        #confirmDeleteBtn:hover {
+            background-color: #b71c1c;
+        }
+
+        #cancelDeleteBtn:hover {
+            background-color: #757575;
+        }
+
+        /* 반응형 */
+        @media (max-width: 600px) {
+
+            #writeForm,
+            #postsList,
+            #postsList li {
+                max-width: 100%;
+            }
+
+            #adminPwdInput {
+                width: 100%;
+            }
+        }
+
+        /* 댓글 섹션 */
+        .comment-section {
+            margin-top: 12px;
+            border-top: 1px solid #ccc;
+            padding-top: 10px;
+        }
+
+        body.dark-mode .comment-section {
+            border-color: #444;
+        }
+
+        .comments-list {
+            margin-bottom: 8px;
+        }
+
+        .comment-item {
+            padding: 4px 0;
+            font-size: 0.95em;
+        }
+
+        .comment-time {
+            font-size: 0.8em;
+            color: #888;
+            margin-left: 6px;
+        }
+
+        body.dark-mode .comment-time {
+            color: #aaa;
+        }
+
+        .comment-author,
+        .comment-input {
+            width: calc(50% - 6px);
+            margin-right: 6px;
+            padding: 6px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        body.dark-mode .comment-author,
+        body.dark-mode .comment-input {
+            background-color: #2b2b2b;
+            color: #e0e0e0;
+            border-color: #555;
+        }
+
+        .comment-submit {
+            padding: 6px 12px;
+            background-color: #607d8b;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .comment-submit:hover {
+            background-color: #455a64;
+        }
+
+        .like-btn {
+            background: none;
+            border: 1px solid #888;
+            border-radius: 4px;
+            padding: 4px 10px;
+            font-size: 14px;
+            color: #444;
+            cursor: pointer;
+            transition: background-color 0.2s ease, color 0.2s ease;
+            user-select: none;
+        }
+
+        .like-btn:hover {
+            background-color: #f0f0f0;
+            color: #000;
+        }
+
+        .like-btn:disabled,
+        .like-btn[disabled] {
+            border-color: #ccc;
+            color: #aaa;
+            cursor: default;
+        }
+
+        .like-count {
+            margin-left: 6px;
+            font-size: 14px;
+            color: #555;
+            vertical-align: middle;
+        }
+    </style>
+
+    <!-- 좋아요 버튼 (다크모드)스타일 시트 -->
+    <style>
+        body.dark-mode {
+            background-color: #121212;
+            color: #eee;
+        }
+
+        body.dark-mode .like-btn {
+            color: #ff6b6b;
+            /* 밝고 눈에 띄는 빨간색 */
+            background: none;
+            border: 1px solid #ff6b6b;
+        }
+
+        body.dark-mode .like-btn:hover {
+            background-color: #330000;
+        }
+
+        body.dark-mode .like-count {
+            color: #ff6b6b;
+        }
+    </style>
+
+    <!-- 관리자 삭제 팝업 창 스타일 시트 (오류날까봐 따로 둠)-->
+    <style>
+        body.dark-mode #deletePopup {
+            background: rgba(255, 255, 255, 0.1) !important;
+            /* 어두운 배경에서 살짝 밝게 조절 */
+        }
+
+        body.dark-mode #deletePopup>div {
+            background: #2b2b2b !important;
+            /* 팝업 내부 배경 어둡게 */
+            color: #e0e0e0 !important;
+            /* 글씨 밝게 */
+        }
+
+        body.dark-mode #deletePopup h3 {
+            color: #ff6b6b !important;
+            /* 빨간색 대신 연한 빨강 */
+        }
+
+        body.dark-mode #deletePopup input#adminPwdInput {
+            background-color: #444 !important;
+            color: #eee !important;
+            border: 1px solid #666 !important;
+            text-align: center !important;
+            /* 텍스트 중앙 정렬 */
+            box-sizing: border-box !important;
+            /* 패딩 포함 너비 계산 */
+            width: 100% !important;
+            /* 너비 100% 유지 */
+        }
+
+        body.dark-mode #deletePopup button#cancelDeleteBtn {
+            background-color: #666 !important;
+            color: #eee !important;
+        }
+
+        body.dark-mode #deletePopup button#cancelDeleteBtn:hover {
+            background-color: #888 !important;
+        }
+
+        body.dark-mode #deletePopup button#confirmDeleteBtn {
+            background-color: #b33 !important;
+            color: #fff !important;
+        }
+
+        body.dark-mode #deletePopup button#confirmDeleteBtn:hover {
+            background-color: #8b0000 !important;
+        }
+    </style>
+
+    <!-- 공지사항 팝업 모달 창 css-->
+    <style>
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .popup-box {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 12px;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            animation: popup-fadein 0.3s ease;
+        }
+
+        .popup-box h2 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        .popup-box p {
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .popup-box button {
+            margin: 5px;
+            padding: 10px 20px;
+            background-color: #2a6ed1;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.2s ease;
+        }
+
+        .popup-box button:hover {
+            background-color: #1d56aa;
+        }
+
+        @keyframes popup-fadein {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* 기존 팝업 스타일은 그대로 유지한 채, 다크모드일 때를 아래에 추가 */
+        body.dark-mode .popup-box {
+            background: #222;
+            /* 어두운 배경 */
+            color: #f0f0f0;
+            /* 밝은 텍스트 */
+            box-shadow: 0 8px 20px rgba(255, 255, 255, 0.1);
+        }
+
+        body.dark-mode .popup-box button {
+            background-color: #444;
+            color: #f0f0f0;
+        }
+
+        body.dark-mode .popup-box button:hover {
+            background-color: #555;
+        }
+
+        @media (max-width: 600px) {
+            .popup-box {
+                width: 95%;
+                padding: 30px 20px;
+                font-size: 0.95rem;
+            }
+
+            .popup-box h2 {
+                font-size: 1.4rem;
+            }
+
+            .popup-box p {
+                font-size: 1rem;
+            }
+
+            .popup-box button {
+                font-size: 0.95rem;
+                padding: 8px 16px;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -310,7 +843,7 @@
     <!-- 접기/펼치기 토글 버튼 -->
     <button id="toggle-music-bar" class="collapse-btn">🎵 노래 메뉴 접기/펼치기</button>
 
-    <div id="music-bar" class="music-bar">
+    <div id="music-bar" class="music-bar collapsed">
         <div class="progress-container">
             <span id="current-time">0:00</span>
             <input type="range" id="progress-bar" value="0" min="0" max="100" step="1">
@@ -332,7 +865,70 @@
 
     <audio id="audio-player" controls style="display: none;"></audio>
 
-    <h1 style="text-align: center; font-size: 40px;">🔨현재 개발 중인 페이지 입니다</h1>
+    <!--<h1 style="text-align: center; font-size: 40px;">🔨현재 개발 중인 페이지 입니다</h1>-->
+
+    <!-- 게시물 -->
+    <!-- 글쓰기 버튼 -->
+    <div style="text-align:center; margin: 20px 0;">
+        <button id="showWriteFormBtn" class="collapse-btn">글쓰기</button>
+    </div>
+
+    <!-- 글쓰기 폼 (처음엔 숨김) -->
+    <div id="writeForm"
+        style="display:none; max-width:600px; margin: 0 auto; padding: 10px; border: 1px solid #ccc; border-radius: 8px;">
+        <label for="authorInput">작성자 이름:</label><br>
+        <input type="text" id="authorInput" placeholder="작성자 이름 입력"
+            style="width:100%; padding:8px; margin-bottom:10px;"><br>
+
+        <label for="titleInput">제목:</label><br>
+        <input type="text" id="titleInput" placeholder="제목 입력" style="width:100%; padding:8px; margin-bottom:10px;"><br>
+
+        <label for="contentInput">글 내용:</label><br>
+        <textarea id="contentInput" placeholder="글을 작성하세요" rows="5"
+            style="width:100%; padding:8px; margin-bottom:10px;"></textarea><br>
+
+        <button id="postBtn" class="collapse-btn" style="width:100%;">올리기</button>
+    </div>
+
+    <!-- 글 목록 -->
+    <div id="postsContainer" style="max-width: 800px; margin: 30px auto; padding: 0 10px;">
+        <h2 style="text-align:center;">게시글 목록</h2>
+        <ul id="postsList" style="list-style:none; padding:0;"></ul>
+    </div>
+
+
+    <!-- 삭제 팝업 -->
+    <div id="deletePopup"
+        style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.6); z-index:9999; justify-content:center; align-items:center;">
+        <div style="background:#fff; padding:20px; border-radius:8px; max-width:300px; width:90%;">
+            <h3 style="color: red;">게시물 삭제</h3>
+            <p>관리자 비밀번호를 입력하세요: </p>
+            <p style="color: rgb(255, 0, 0)">(게시물 작성자는 삭제 문의를 부탁드립니다.)</p>
+            <input type="password" id="adminPwdInput" style="width:100%; padding:8px; margin-bottom:10px;"
+                placeholder="비밀번호">
+            <div style="text-align:right;">
+                <button id="cancelDeleteBtn" class="collapse-btn"
+                    style="background:#ccc; color:#333; margin-right:8px;">취소</button>
+                <button id="confirmDeleteBtn" class="collapse-btn" style="background:#d33;">삭제</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 공지사항 팝업 모달 창 -->
+    <div id="firstVisitPopup" class="popup-overlay">
+        <div class="popup-box">
+            <h2>💬 커뮤니티 페이지</h2>
+            <p style="color: red; font-size: 22px;">규칙을 꼭 읽어주세요</p>
+            <p style="background-color: #bbbbbb; color:#000000; font-size: 20px;">1. 비방/정치/저격의 게시물은 삭제 대상입니다.</p>
+            <p style="background-color: #bbbbbb; color: #000000; font-size: 20px;">2. 게시물의 내용은 자유입니다. <br> 논문을 작성해도 좋습니다.</p>
+            <b style="background-color: #bbbbbb; color: #1976d2; font-size: 17px;">페이지 상단에서 음악 재생 기능을 사용할 수 있어요!</b>
+
+            <div>
+                <button id="popup-close">닫기</button>
+                <button id="popup-dont-show">오늘 하루 보지 않기</button>
+            </div>
+        </div>
+    </div>
 
 
     <!-- 푸터 -->
@@ -409,6 +1005,255 @@
         document.getElementById("toggle-music-bar").addEventListener("click", function () {
             const bar = document.getElementById("music-bar");
             bar.classList.toggle("collapsed");
+        });
+    </script>
+
+    <!-- 게시물 기능 스크립트 -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCm6nslSJF8RQgjN3h4z-awLbObhM1FTVw",
+            authDomain: "dbpiaje.firebaseapp.com",
+            databaseURL: "https://dbpiaje-default-rtdb.firebaseio.com/",
+            projectId: "dbpiaje",
+            storageBucket: "dbpiaje.firebasestorage.app",
+            messagingSenderId: "590808126930",
+            appId: "1:590808126930:web:4eb9e5e754674435df240b"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        async function hashPassword(pwd) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(pwd);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        const ADMIN_PWD_HASH = "1a36ea191cd5abd1c2ebd694de6dc5f1bb83661a77176d1b5524645b2ec00668";
+
+        const showWriteFormBtn = document.getElementById('showWriteFormBtn');
+        const writeForm = document.getElementById('writeForm');
+        const postBtn = document.getElementById('postBtn');
+        const postsList = document.getElementById('postsList');
+
+        const deletePopup = document.getElementById('deletePopup');
+        const adminPwdInput = document.getElementById('adminPwdInput');
+        const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
+        const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+
+        let deleteTargetKey = null;
+
+        showWriteFormBtn.addEventListener('click', () => {
+            writeForm.style.display = writeForm.style.display === 'none' ? 'block' : 'none';
+        });
+
+        postBtn.addEventListener('click', async () => {
+            const author = document.getElementById('authorInput').value.trim();
+            const title = document.getElementById('titleInput').value.trim();
+            const content = document.getElementById('contentInput').value.trim();
+
+            if (!author || !title || !content) {
+                alert('작성자, 제목, 내용을 모두 입력해주세요.');
+                return;
+            }
+
+            const postData = {
+                author,
+                title,
+                content,
+                timestamp: Date.now(),
+                likes: 0  // 좋아요 초기값 0으로 추가
+            };
+
+            await db.ref('posts').push(postData);
+
+            document.getElementById('authorInput').value = '';
+            document.getElementById('titleInput').value = '';
+            document.getElementById('contentInput').value = '';
+
+            writeForm.style.display = 'none';
+        });
+
+        function createPostElement(post, key) {
+            const li = document.createElement('li');
+            li.className = 'post-item';
+
+            const date = new Date(post.timestamp);
+            const dateStr = date.toLocaleString();
+
+            li.innerHTML = `
+        <div class="post-title">${post.title}</div>
+        <div class="post-meta">작성자: ${post.author} | ${dateStr}</div>
+        <div class="post-content" style="margin:8px 0; display:none;">${post.content.replace(/\n/g, '<br>')}</div>
+        
+        <button class="like-btn" data-key="${key}">
+            <i class="fa-regular fa-thumbs-up"></i> 좋아요 (<span class="like-count">${post.likes || 0}</span>)
+        </button>
+
+        <button class="toggle-content-btn">내용 펼치기</button>
+        <button class="admin-delete-btn" data-key="${key}">관리자 삭제</button>
+
+        <div class="comment-section">
+            <div class="comments-list"></div>
+            <input type="text" class="comment-author" placeholder="댓글 작성자" />
+            <input type="text" class="comment-input" placeholder="댓글을 입력하세요" />
+            <button class="comment-submit">댓글 달기</button>
+        </div>
+    `;
+
+            // 내용 펼치기 버튼 이벤트
+            const toggleBtn = li.querySelector('.toggle-content-btn');
+            const contentDiv = li.querySelector('.post-content');
+            toggleBtn.addEventListener('click', () => {
+                const isVisible = contentDiv.style.display === 'block';
+                contentDiv.style.display = isVisible ? 'none' : 'block';
+                toggleBtn.textContent = isVisible ? '내용 펼치기' : '내용 접기';
+            });
+
+            // 관리자 삭제 버튼 이벤트
+            const deleteBtn = li.querySelector('.admin-delete-btn');
+            deleteBtn.addEventListener('click', () => {
+                deleteTargetKey = key;
+                adminPwdInput.value = '';
+                deletePopup.style.display = 'flex';
+                adminPwdInput.focus();
+            });
+
+            // 좋아요 버튼 & 중복 클릭 방지
+            const likeBtn = li.querySelector('.like-btn');
+            const likeCountSpan = likeBtn.querySelector('.like-count');
+
+            likeBtn.addEventListener('click', async () => {
+                const likedKey = `liked-${key}`;
+                if (localStorage.getItem(likedKey)) {
+                    alert('이미 좋아요를 누르셨습니다!');
+                    return;
+                }
+
+                const currentLikes = post.likes || 0;
+                const newLikes = currentLikes + 1;
+
+                await db.ref(`posts/${key}/likes`).set(newLikes);
+
+                localStorage.setItem(likedKey, 'true');
+            });
+
+            // 좋아요 수 실시간 업데이트
+            db.ref(`posts/${key}/likes`).on('value', snapshot => {
+                likeCountSpan.textContent = snapshot.val() || 0;
+            });
+
+            // 댓글 UI 요소
+            const commentsListDiv = li.querySelector('.comments-list');
+            const commentAuthorInput = li.querySelector('.comment-author');
+            const commentInput = li.querySelector('.comment-input');
+            const commentSubmitBtn = li.querySelector('.comment-submit');
+
+            // 댓글 불러오기
+            db.ref(`posts/${key}/comments`).on('value', snapshot => {
+                commentsListDiv.innerHTML = '';
+                const comments = snapshot.val();
+                if (comments) {
+                    Object.values(comments).forEach(comment => {
+                        const commentEl = document.createElement('div');
+                        const commentDate = new Date(comment.timestamp).toLocaleString();
+                        commentEl.className = 'comment-item';
+                        commentEl.innerHTML = `<strong>${comment.author}</strong>: ${comment.text} <span class="comment-time">${commentDate}</span>`;
+                        commentsListDiv.appendChild(commentEl);
+                    });
+                }
+            });
+
+            // 댓글 저장
+            commentSubmitBtn.addEventListener('click', () => {
+                const author = commentAuthorInput.value.trim();
+                const text = commentInput.value.trim();
+                if (!author || !text) {
+                    alert("작성자와 내용을 모두 입력해주세요.");
+                    return;
+                }
+
+                const commentData = {
+                    author,
+                    text,
+                    timestamp: Date.now()
+                };
+
+                db.ref(`posts/${key}/comments`).push(commentData);
+
+                commentAuthorInput.value = '';
+                commentInput.value = '';
+            });
+
+            return li;
+        }
+
+        function renderPosts(posts) {
+            postsList.innerHTML = '';
+            if (!posts) return;
+
+            Object.entries(posts).reverse().forEach(([key, post]) => {
+                const li = createPostElement(post, key);
+                postsList.appendChild(li);
+            });
+        }
+
+        db.ref('posts').on('value', snapshot => {
+            renderPosts(snapshot.val());
+        });
+
+        cancelDeleteBtn.addEventListener('click', () => {
+            deletePopup.style.display = 'none';
+            deleteTargetKey = null;
+        });
+
+        confirmDeleteBtn.addEventListener('click', async () => {
+            const inputPwd = adminPwdInput.value;
+            if (!inputPwd) {
+                alert('비밀번호를 입력하세요.');
+                return;
+            }
+
+            const hashedInput = await hashPassword(inputPwd);
+            if (hashedInput !== ADMIN_PWD_HASH) {
+                alert('비밀번호가 틀렸습니다.');
+                return;
+            }
+
+            if (deleteTargetKey) {
+                await db.ref(`posts/${deleteTargetKey}`).remove();
+                alert('게시물이 삭제되었습니다.');
+            }
+
+            deletePopup.style.display = 'none';
+            deleteTargetKey = null;
+        });
+    </script>
+
+    <!-- 공지사항 팝업 스크립트 -->
+    <script>
+        const popupKey = "firstVisitPopupShown";
+        const today = new Date().toDateString(); // 하루 기준
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const savedDate = localStorage.getItem(popupKey);
+            const popup = document.getElementById("firstVisitPopup");
+
+            if (savedDate !== today) {
+                popup.style.display = "flex";
+            }
+
+            document.getElementById("popup-close").addEventListener("click", () => {
+                popup.style.display = "none";
+            });
+
+            document.getElementById("popup-dont-show").addEventListener("click", () => {
+                localStorage.setItem(popupKey, today);
+                popup.style.display = "none";
+            });
         });
     </script>
 </body>

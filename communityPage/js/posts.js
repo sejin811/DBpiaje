@@ -291,16 +291,25 @@ imageInput.addEventListener("change", async (event) => {
     const file = event.target.files[0];
     if (!file) return;
 
-    const storageRef = firebase.storage().ref();
-    const imageRef = storageRef.child(`images/${Date.now()}_${file.name}`);
-    await imageRef.put(file);
-    const downloadURL = await imageRef.getDownloadURL();
+    try {
+        const imageRef = firebase.storage().ref().child(`images/${Date.now()}_${file.name}`);
+        const snapshot = await imageRef.put(file);
+        const downloadURL = await snapshot.ref.getDownloadURL(); // 이게 핵심!
 
-    const contentInput = document.getElementById("contentInput");
-    const cursorPos = contentInput.selectionStart;
-    const textBefore = contentInput.value.substring(0, cursorPos);
-    const textAfter = contentInput.value.substring(cursorPos);
-    contentInput.value = `${textBefore}<img src="${downloadURL}" style="max-width: 100%;"/>\n${textAfter}`;
+        const contentInput = document.getElementById("contentInput");
+        const cursorPos = contentInput.selectionStart;
+        const textBefore = contentInput.value.substring(0, cursorPos);
+        const textAfter = contentInput.value.substring(cursorPos);
+
+        const imgTag = `<img src="${downloadURL}" style="max-width: 100%;"/>\n`;
+
+        contentInput.value = textBefore + imgTag + textAfter;
+        contentInput.focus();
+        contentInput.selectionStart = contentInput.selectionEnd = cursorPos + imgTag.length;
+    } catch (e) {
+        console.error("이미지 업로드 실패:", e);
+        alert("이미지 업로드 중 오류가 발생했습니다.");
+    }
 });
 
 // 관리자 로그인, 로그아웃 기능 구현

@@ -1,0 +1,45 @@
+/* 이미지 추가 버튼 */
+#addImageBtn {
+    background-color: #555;
+    /* 회색 */
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 10px;
+    transition: background-color 0.2s;
+}
+
+#addImageBtn:hover {
+    background-color: #444;
+    /* 좀 더 어두운 회색 */
+}
+
+/* 업로드 영역 */
+#imageUploadWrapper {
+    margin-top: 8px;
+    display: none;
+}
+
+/* 파일 선택 input (기본 스타일 감추고 커스텀 라벨 사용) */
+#imageInput {
+    display: none;
+}
+
+/* 커스텀 파일 선택 버튼 스타일 */
+.custom-file-label {
+    display: inline-block;
+    background-color: #777;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s;
+}
+
+.custom-file-label:hover {
+    background-color: #666;
+}

@@ -1,0 +1,50 @@
+body.dark-mode #deletePopup {
+    background: rgba(255, 255, 255, 0.1) !important;
+    /* 어두운 배경에서 살짝 밝게 조절 */
+}
+
+body.dark-mode #deletePopup>div {
+    background: #2b2b2b !important;
+    /* 팝업 내부 배경 어둡게 */
+    color: #e0e0e0 !important;
+    /* 글씨 밝게 */
+}
+
+body.dark-mode #deletePopup h3 {
+    color: #ff6b6b !important;
+    /* 빨간색 대신 연한 빨강 */
+}
+
+body.dark-mode #deletePopup input#adminPwdInput {
+    background-color: #444 !important;
+    color: #eee !important;
+    border: 1px solid #666 !important;
+    text-align: center !important;
+    /* 텍스트 중앙 정렬 */
+    box-sizing: border-box !important;
+    /* 패딩 포함 너비 계산 */
+    width: 100% !important;
+    /* 너비 100% 유지 */
+}
+
+body.dark-mode #deletePopup button#cancelDeleteBtn {
+    background-color: #666 !important;
+    color: #eee !important;
+}
+
+body.dark-mode #deletePopup button#cancelDeleteBtn:hover {
+    background-color: #888 !important;
+}
+
+body.dark-mode #deletePopup button#confirmDeleteBtn {
+    background-color: #b33 !important;
+    color: #fff !important;
+}
+
+body.dark-mode #deletePopup button#confirmDeleteBtn:hover {
+    background-color: #8b0000 !important;
+}
+
+#deletePopup {
+    display: none !important;
+}

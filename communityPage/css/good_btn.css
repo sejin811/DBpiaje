@@ -1,0 +1,19 @@
+body.dark-mode {
+    background-color: #121212;
+    color: #eee;
+}
+
+body.dark-mode .like-btn {
+    color: #ff6b6b;
+    /* 밝고 눈에 띄는 빨간색 */
+    background: none;
+    border: 1px solid #ff6b6b;
+}
+
+body.dark-mode .like-btn:hover {
+    background-color: #330000;
+}
+
+body.dark-mode .like-count {
+    color: #ff6b6b;
+}

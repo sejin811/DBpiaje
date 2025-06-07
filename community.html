@@ -631,6 +631,55 @@
         }
     </style>
 
+    <!-- 사진 업로드 버튼 -->
+    <style>
+        /* 이미지 추가 버튼 */
+        #addImageBtn {
+            background-color: #555;
+            /* 회색 */
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+            transition: background-color 0.2s;
+        }
+
+        #addImageBtn:hover {
+            background-color: #444;
+            /* 좀 더 어두운 회색 */
+        }
+
+        /* 업로드 영역 */
+        #imageUploadWrapper {
+            margin-top: 8px;
+            display: none;
+        }
+
+        /* 파일 선택 input (기본 스타일 감추고 커스텀 라벨 사용) */
+        #imageInput {
+            display: none;
+        }
+
+        /* 커스텀 파일 선택 버튼 스타일 */
+        .custom-file-label {
+            display: inline-block;
+            background-color: #777;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.2s;
+        }
+
+        .custom-file-label:hover {
+            background-color: #666;
+        }
+    </style>
+
     <!-- 좋아요 버튼 (다크모드)스타일 시트 -->
     <style>
         body.dark-mode {
@@ -808,6 +857,36 @@
             }
         }
     </style>
+
+    <!-- 최신순/오래된 순 버튼-->
+    <style>
+        .sort-buttons {
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .sort-buttons button {
+            background-color: #f0f0f0;
+            color: #333;
+            border: 1px solid #ccc;
+            padding: 8px 16px;
+            margin: 0 5px;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .sort-buttons button:hover {
+            background-color: #e0e0e0;
+        }
+
+        .sort-buttons button.active {
+            background-color: #f0f0f0;
+            color: #333;
+            border-color: #ccc;
+        }
+    </style>
 </head>
 
 <body>
@@ -850,8 +929,10 @@
             <span id="duration">0:00</span>
         </div>
         <span>🎵 노래 선택:</span>
-        <button class="song-btn" data-src="music_file/ Gill Chang Danni Carra - Why Do I Try .mp3">1. [Gill Chang Danni Carra]  Why Do I Try</button>
-        <button class="song-btn" data-src="music_file/Annalise - Nothing's Gonna Stop Us Tonight.mp3">2. [Initial D] Nothing's Gonna Stop Us Tonight</button>
+        <button class="song-btn" data-src="music_file/ Gill Chang Danni Carra - Why Do I Try .mp3">1. [Gill Chang Danni
+            Carra] Why Do I Try</button>
+        <button class="song-btn" data-src="music_file/Annalise - Nothing's Gonna Stop Us Tonight.mp3">2. [Initial D]
+            Nothing's Gonna Stop Us Tonight</button>
         <button class="song-btn" data-src="music_file/Bamboo Bimbo _ Kiss.mp3">3. [Initial D] Kiss</button>
         <button class="song-btn" data-src="music_file/Manuel - Gas Gas Gas.mp3">4. [Initial D] gas gas gas</button>
         <button class="song-btn" data-src="music_file/예아2.wav">5. 예아</button>
@@ -869,6 +950,20 @@
     <audio id="audio-player" controls style="display: none;"></audio>
 
     <!--<h1 style="text-align: center; font-size: 40px;">🔨현재 개발 중인 페이지 입니다</h1>-->
+
+
+    <!-- 글 목록 위에 추가 -->
+    <div style="max-width: 800px; margin: 20px auto; text-align: center;">
+        <input type="text" id="searchInput" placeholder="검색어 입력" style="width: 60%; padding: 8px;">
+        <button id="searchBtn" style="padding: 8px 16px;">검색</button>
+        <button id="resetSearchBtn" style="padding: 8px 16px;">초기화</button>
+    </div>
+    
+    <!-- 최신순/오래된 순 -->
+    <div class="sort-buttons">
+        <button id="sortRecentBtn" class="active">최신순</button>
+        <button id="sortOldBtn">오래된순</button>
+    </div>
 
     <!-- 게시물 -->
     <!-- 글쓰기 버튼 -->
@@ -890,15 +985,17 @@
         <textarea id="contentInput" placeholder="글을 작성하세요" rows="5"
             style="width:100%; padding:8px; margin-bottom:10px;"></textarea><br>
 
+        <!-- 이미지 업로드 -->
+        <div id="imageUploadWrapper">
+            <label for="imageInput" class="custom-file-label">파일 선택</label>
+            <input type="file" id="imageInput" accept="image/*" />
+        </div>
+        <button id="addImageBtn" type="button" style="margin-bottom: 10px;">＋ 사진 추가</button>
         <button id="postBtn" class="collapse-btn" style="width:100%;">올리기</button>
     </div>
 
-    <!-- 글 목록 -->
-    <div id="postsContainer" style="max-width: 800px; margin: 30px auto; padding: 0 10px;">
-        <h2 style="text-align:center;">게시글 목록</h2>
-        <ul id="postsList" style="list-style:none; padding:0;"></ul>
-    </div>
-
+    <!-- 게시물 렌더링 -->
+    <ul id="postsList"></ul>
 
     <!-- 삭제 팝업 -->
     <div id="deletePopup"
@@ -923,7 +1020,9 @@
             <h2>💬 커뮤니티 페이지</h2>
             <p style="color: red; font-size: 22px;">규칙을 꼭 읽어주세요</p>
             <p style="background-color: #bbbbbb; color:#000000; font-size: 20px;">1. 비방/정치/저격의 게시물은 삭제 대상입니다.</p>
-            <p style="background-color: #bbbbbb; color: #000000; font-size: 20px;">2. 게시물의 내용은 자유입니다. <br> 논문을 작성해도 좋습니다.</p>
+            <p style="background-color: #bbbbbb; color: #000000; font-size: 20px;">2. 게시물의 내용은 자유입니다. <br> 논문을 작성해도
+                좋습니다.</p>
+            <p style="color: #000000; background-color: #bbbbbb; font-size: 20px;">-사진 업로드 기능 관련-<br>사진 업로드 기능은 "9월 29일" 까지 이용가능합니다.<br>사진 업로드는 시간이 조금 걸리며, 텍스트로 된 주소가 나와도 그대로 업로드 하시면 됩니다.</p>
             <b style="background-color: #bbbbbb; color: #1976d2; font-size: 17px;">페이지 상단에서 음악 재생 기능을 사용할 수 있어요!</b>
 
             <div>
@@ -1014,6 +1113,7 @@
     <!-- 게시물 기능 스크립트 -->
     <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-storage-compat.js"></script>
 
     <script>
         const firebaseConfig = {
@@ -1068,7 +1168,7 @@
                 title,
                 content,
                 timestamp: Date.now(),
-                likes: 0  // 좋아요 초기값 0으로 추가
+                likes: 0
             };
 
             await db.ref('posts').push(postData);
@@ -1076,7 +1176,6 @@
             document.getElementById('authorInput').value = '';
             document.getElementById('titleInput').value = '';
             document.getElementById('contentInput').value = '';
-
             writeForm.style.display = 'none';
         });
 
@@ -1084,30 +1183,26 @@
             const li = document.createElement('li');
             li.className = 'post-item';
 
-            const date = new Date(post.timestamp);
-            const dateStr = date.toLocaleString();
+            const dateStr = new Date(post.timestamp).toLocaleString();
 
             li.innerHTML = `
-        <div class="post-title">${post.title}</div>
-        <div class="post-meta">작성자: ${post.author} | ${dateStr}</div>
-        <div class="post-content" style="margin:8px 0; display:none;">${post.content.replace(/\n/g, '<br>')}</div>
-        
-        <button class="like-btn" data-key="${key}">
-            <i class="fa-regular fa-thumbs-up"></i> 좋아요 (<span class="like-count">${post.likes || 0}</span>)
-        </button>
+            <div class="post-title">${post.title}</div>
+            <div class="post-meta">작성자: ${post.author} | ${dateStr}</div>
+            <div class="post-content" style="margin:8px 0; display:none;">${post.content.replace(/\n/g, '<br>')}</div>
+            <button class="like-btn" data-key="${key}">
+                <i class="fa-regular fa-thumbs-up"></i> 좋아요 (<span class="like-count">${post.likes || 0}</span>)
+            </button>
+            <button class="toggle-content-btn">내용 펼치기</button>
+            <button class="admin-delete-btn" data-key="${key}">관리자 삭제</button>
+            <div class="comment-section">
+                <div class="comments-list"></div>
+                <input type="text" class="comment-author" placeholder="댓글 작성자" />
+                <input type="text" class="comment-input" placeholder="댓글을 입력하세요" />
+                <button class="comment-submit">댓글 달기</button>
+            </div>
+        `;
 
-        <button class="toggle-content-btn">내용 펼치기</button>
-        <button class="admin-delete-btn" data-key="${key}">관리자 삭제</button>
-
-        <div class="comment-section">
-            <div class="comments-list"></div>
-            <input type="text" class="comment-author" placeholder="댓글 작성자" />
-            <input type="text" class="comment-input" placeholder="댓글을 입력하세요" />
-            <button class="comment-submit">댓글 달기</button>
-        </div>
-    `;
-
-            // 내용 펼치기 버튼 이벤트
+            // 내용 펼치기
             const toggleBtn = li.querySelector('.toggle-content-btn');
             const contentDiv = li.querySelector('.post-content');
             toggleBtn.addEventListener('click', () => {
@@ -1116,7 +1211,26 @@
                 toggleBtn.textContent = isVisible ? '내용 펼치기' : '내용 접기';
             });
 
-            // 관리자 삭제 버튼 이벤트
+            // 좋아요 버튼
+            const likeBtn = li.querySelector('.like-btn');
+            const likeCountSpan = likeBtn.querySelector('.like-count');
+            likeBtn.addEventListener('click', async () => {
+                const likedKey = `liked-${key}`;
+                if (localStorage.getItem(likedKey)) {
+                    alert('이미 좋아요를 누르셨습니다!');
+                    return;
+                }
+
+                const newLikes = (post.likes || 0) + 1;
+                await db.ref(`posts/${key}/likes`).set(newLikes);
+                localStorage.setItem(likedKey, 'true');
+            });
+
+            db.ref(`posts/${key}/likes`).on('value', snapshot => {
+                likeCountSpan.textContent = snapshot.val() || 0;
+            });
+
+            // 관리자 삭제
             const deleteBtn = li.querySelector('.admin-delete-btn');
             deleteBtn.addEventListener('click', () => {
                 deleteTargetKey = key;
@@ -1125,52 +1239,26 @@
                 adminPwdInput.focus();
             });
 
-            // 좋아요 버튼 & 중복 클릭 방지
-            const likeBtn = li.querySelector('.like-btn');
-            const likeCountSpan = likeBtn.querySelector('.like-count');
-
-            likeBtn.addEventListener('click', async () => {
-                const likedKey = `liked-${key}`;
-                if (localStorage.getItem(likedKey)) {
-                    alert('이미 좋아요를 누르셨습니다!');
-                    return;
-                }
-
-                const currentLikes = post.likes || 0;
-                const newLikes = currentLikes + 1;
-
-                await db.ref(`posts/${key}/likes`).set(newLikes);
-
-                localStorage.setItem(likedKey, 'true');
-            });
-
-            // 좋아요 수 실시간 업데이트
-            db.ref(`posts/${key}/likes`).on('value', snapshot => {
-                likeCountSpan.textContent = snapshot.val() || 0;
-            });
-
-            // 댓글 UI 요소
+            // 댓글 처리
             const commentsListDiv = li.querySelector('.comments-list');
             const commentAuthorInput = li.querySelector('.comment-author');
             const commentInput = li.querySelector('.comment-input');
             const commentSubmitBtn = li.querySelector('.comment-submit');
 
-            // 댓글 불러오기
             db.ref(`posts/${key}/comments`).on('value', snapshot => {
                 commentsListDiv.innerHTML = '';
                 const comments = snapshot.val();
                 if (comments) {
                     Object.values(comments).forEach(comment => {
                         const commentEl = document.createElement('div');
-                        const commentDate = new Date(comment.timestamp).toLocaleString();
                         commentEl.className = 'comment-item';
-                        commentEl.innerHTML = `<strong>${comment.author}</strong>: ${comment.text} <span class="comment-time">${commentDate}</span>`;
+                        const date = new Date(comment.timestamp).toLocaleString();
+                        commentEl.innerHTML = `<strong>${comment.author}</strong>: ${comment.text} <span class="comment-time">${date}</span>`;
                         commentsListDiv.appendChild(commentEl);
                     });
                 }
             });
 
-            // 댓글 저장
             commentSubmitBtn.addEventListener('click', () => {
                 const author = commentAuthorInput.value.trim();
                 const text = commentInput.value.trim();
@@ -1186,7 +1274,6 @@
                 };
 
                 db.ref(`posts/${key}/comments`).push(commentData);
-
                 commentAuthorInput.value = '';
                 commentInput.value = '';
             });
@@ -1194,14 +1281,17 @@
             return li;
         }
 
+        let currentSort = 'recent';
+
         function renderPosts(posts) {
             postsList.innerHTML = '';
             if (!posts) return;
-
-            Object.entries(posts).reverse().forEach(([key, post]) => {
+            let entries = Object.entries(posts);
+            if (currentSort === 'recent') entries = entries.reverse();
+            for (const [key, post] of entries) {
                 const li = createPostElement(post, key);
                 postsList.appendChild(li);
-            });
+            }
         }
 
         db.ref('posts').on('value', snapshot => {
@@ -1233,6 +1323,72 @@
 
             deletePopup.style.display = 'none';
             deleteTargetKey = null;
+        });
+
+        document.getElementById("searchBtn").addEventListener("click", () => {
+            const keyword = document.getElementById("searchInput").value.trim().toLowerCase();
+            if (!keyword) return;
+
+            db.ref('posts').once('value', snapshot => {
+                const allPosts = snapshot.val();
+                const filtered = Object.entries(allPosts || {}).filter(([_, post]) =>
+                    post.title.toLowerCase().includes(keyword) || post.content.toLowerCase().includes(keyword)
+                );
+                renderPosts(Object.fromEntries(filtered));
+            });
+        });
+
+        document.getElementById("resetSearchBtn").addEventListener("click", () => {
+            document.getElementById("searchInput").value = '';
+            db.ref('posts').once('value', snapshot => {
+                renderPosts(snapshot.val());
+            });
+        });
+
+        const sortRecentBtn = document.getElementById("sortRecentBtn");
+        const sortOldBtn = document.getElementById("sortOldBtn");
+
+        sortRecentBtn.addEventListener("click", () => {
+            currentSort = 'recent';
+            sortRecentBtn.classList.add("active");
+            sortOldBtn.classList.remove("active");
+            db.ref('posts').once('value', snapshot => {
+                renderPosts(snapshot.val());
+            });
+        });
+
+        sortOldBtn.addEventListener("click", () => {
+            currentSort = 'old';
+            sortOldBtn.classList.add("active");
+            sortRecentBtn.classList.remove("active");
+            db.ref('posts').once('value', snapshot => {
+                renderPosts(snapshot.val());
+            });
+        });
+
+        // 이미지 업로드
+        const addImageBtn = document.getElementById("addImageBtn");
+        const imageUploadWrapper = document.getElementById("imageUploadWrapper");
+        const imageInput = document.getElementById("imageInput");
+
+        addImageBtn.addEventListener("click", () => {
+            imageUploadWrapper.style.display = imageUploadWrapper.style.display === "none" ? "block" : "none";
+        });
+
+        imageInput.addEventListener("change", async (event) => {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const storageRef = firebase.storage().ref();
+            const imageRef = storageRef.child(`images/${Date.now()}_${file.name}`);
+            await imageRef.put(file);
+            const downloadURL = await imageRef.getDownloadURL();
+
+            const contentInput = document.getElementById("contentInput");
+            const cursorPos = contentInput.selectionStart;
+            const textBefore = contentInput.value.substring(0, cursorPos);
+            const textAfter = contentInput.value.substring(cursorPos);
+            contentInput.value = `${textBefore}<img src="${downloadURL}" style="max-width: 100%;"/>\n${textAfter}`;
         });
     </script>
 

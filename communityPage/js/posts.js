@@ -239,7 +239,3 @@ db.ref('posts').on('value', snapshot => {
 });
 updateAdminUI();
 
-
-// 모든출처 허용
-const cors = require('cors');
-app.use(cors()); // 기본적으로 Access-Control-Allow-Origin: * 로 설정됨

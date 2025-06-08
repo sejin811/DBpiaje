@@ -173,7 +173,8 @@ document.getElementById('imageInput').addEventListener('change', async (e) => {
         input.focus();
         input.selectionStart = input.selectionEnd = cursor + imgTag.length;
     } catch (e) {
-        alert("이미지 업로드 오류");
+        console.error("이미지 업로드 오류", e);
+        alert("이미지 업로드 오류: 콘솔을 확인하세요");
     }
 });
 
